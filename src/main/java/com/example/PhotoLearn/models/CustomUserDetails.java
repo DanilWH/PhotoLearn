@@ -18,7 +18,7 @@ public class CustomUserDetails implements UserDetails {
         this.password = user.getPassword();
         this.active = user.isActive();
         this.userRoles = user.getUserRoles();
-    }
+    }d
     
     public CustomUserDetails() {
     }
