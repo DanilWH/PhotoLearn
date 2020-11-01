@@ -9,7 +9,7 @@
     </head>
     <body>
     	<#if _user??>
-    		Здравствуйте, ${user.username}! -
+    		Здравствуйте, ${_user.username}! -
     		<form action="/logout" method="post">
     			<input type="hidden" name="_csrf" value="${_csrf.token}" />
     			<button type="submit">Выйти</button>

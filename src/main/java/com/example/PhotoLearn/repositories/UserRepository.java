@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import com.example.PhotoLearn.models.UserDto;
+import com.example.PhotoLearn.models.User;
 
-public interface UserRepository extends JpaRepository<UserDto, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
     
-    Optional<UserDto> findByUsername(String username);
+    Optional<User> findByUsername(String username);
 
 }

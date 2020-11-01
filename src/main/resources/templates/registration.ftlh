@@ -27,6 +27,7 @@
 			<label for="username">Имя пользователя: </label>
 			<@spring.formInput "userDto.username" />
             <@spring.showErrors "<br>" />
+            ${message?ifExists}
 		</div>
 		
 		<div>

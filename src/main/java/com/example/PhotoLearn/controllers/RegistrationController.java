@@ -2,20 +2,27 @@ package com.example.PhotoLearn.controllers;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.PhotoLearn.models.UserDto;
+import com.example.PhotoLearn.models.User;
+import com.example.PhotoLearn.services.IUserService;
+import com.example.PhotoLearn.web.dto.UserDto;
+import com.example.PhotoLearn.web.error.UserAlreadyExistsException;
 
 @Controller
 public class RegistrationController {
     
+    @Autowired
+    private IUserService userService;
+    
     @GetMapping("/registration")
     public String registration(Model model) {
-        model.addAttribute("userDto", new UserDto());
+        model.addAttribute("userDto", new User());
         
         return "registration";
     }
@@ -27,12 +34,16 @@ public class RegistrationController {
             Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("noErrors", false);
             model.addAttribute("userDto", userDto);
             return "registration";
         }
         
-        
+        try {
+            User user = this.userService.registerNewUserAccount(userDto); 
+        } catch (UserAlreadyExistsException uaeException) {
+            model.addAttribute("message", "An account for that username already exists.");
+            return "registration";
+        }
         
         return "redirect:/";
     }
