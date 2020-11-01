@@ -15,7 +15,8 @@
     			<button type="submit">Выйти</button>
     		</form>
     	<#else>
-    		<a href="/login">Войти</a>
+    		<a href="/login">Войти</a> -
+    		<a href="/registration">Зарегестрироваться</a>
     	</#if>
         <#nested />
     </body>
