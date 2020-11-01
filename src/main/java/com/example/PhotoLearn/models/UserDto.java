@@ -13,16 +13,21 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+
+import com.example.PhotoLearn.validation.ValidPassword;
 
 @Entity
 @Table(name = "users")
-public class User {
+public class UserDto {
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
+    @NotBlank(message = "Имя пользователя не должно быть пустым.")
     private String username;
+    @ValidPassword
     private String password;
     private boolean active;
     

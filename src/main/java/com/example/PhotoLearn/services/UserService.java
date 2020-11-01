@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.PhotoLearn.models.CustomUserDetails;
-import com.example.PhotoLearn.models.User;
+import com.example.PhotoLearn.models.UserDto;
 import com.example.PhotoLearn.repositories.UserRepository;
 
 @Service
@@ -20,11 +20,16 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> user = this.userRepository.findByUsername(username);
+        Optional<UserDto> userDto = this.userRepository.findByUsername(username);
         
-        user.orElseThrow(() -> new UsernameNotFoundException("Not Found: " + username));
+        userDto.orElseThrow(() -> new UsernameNotFoundException("Not Found: " + username));
         
-        return user.map(CustomUserDetails::new).get();
+        return userDto.map(CustomUserDetails::new).get();
+    }
+    
+    @Override
+    public UserDto registerNewUserAccount(UserDto accountDto) {
+        return new UserDto();
     }
 
     

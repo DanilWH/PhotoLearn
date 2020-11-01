@@ -13,12 +13,12 @@ public class CustomUserDetails implements UserDetails {
     private boolean active;
     private Set<UserRoles> userRoles;
     
-    public CustomUserDetails(User user) {
-        this.username = user.getUsername();
-        this.password = user.getPassword();
-        this.active = user.isActive();
-        this.userRoles = user.getUserRoles();
-    }d
+    public CustomUserDetails(UserDto userDto) {
+        this.username = userDto.getUsername();
+        this.password = userDto.getPassword();
+        this.active = userDto.isActive();
+        this.userRoles = userDto.getUserRoles();
+    }
     
     public CustomUserDetails() {
     }
