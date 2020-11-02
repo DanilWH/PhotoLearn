@@ -2,14 +2,17 @@ package com.example.PhotoLearn.web.dto;
 
 import javax.validation.constraints.NotBlank;
 
+import com.example.PhotoLearn.validation.PasswordMatches;
 import com.example.PhotoLearn.validation.ValidPassword;
 
+@PasswordMatches
 public class UserDto {
     
     @NotBlank(message = "Имя пользователя не должно быть пустым.")
     private String username;
     @ValidPassword
     private String password;
+    private String confirmPassword;
     private boolean active;
     
     public String getUsername() {
@@ -18,6 +21,10 @@ public class UserDto {
 
     public String getPassword() {
         return this.password;
+    }
+    
+    public String getConfirmPassword() {
+        return this.confirmPassword;
     }
 
     public boolean isActive() {
@@ -30,6 +37,10 @@ public class UserDto {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+    
+    public void setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
     }
 
     public void setActive(boolean active) {

@@ -6,7 +6,7 @@
 	<script>
 		function check() {
 			var password = document.getElementById("password").value;
-			var confirm_password = document.getElementById("confirm_password_id").value;
+			var confirm_password = document.getElementById("confirmPassword").value;
 				
 			if (password == confirm_password) {
 				return true;
@@ -22,7 +22,6 @@
 	
 	<form action="/registration" method="post">
 		<input type="hidden" name="_csrf" value="${_csrf.token}"/>
-		
 		<div>
 			<label for="username">Имя пользователя: </label>
 			<@spring.formInput "userDto.username" />
@@ -42,19 +41,27 @@
 		</div>
 		
 		<div>
-			<label for="confirm_password_id">Повторите пароль: </label>
-			<input id="confirm_password_id" type="password" name="confirm_password" />
+			<label for="confirmPassword">Повторите пароль: </label>
+			<@spring.formPasswordInput "userDto.confirmPassword" />
+			
+			
+			
+			<!-- show error messages for the password. -->
+			<@spring.bind "userDto.password" />
 			<#if spring.status.errorMessages[0]??>
 			<ul>
 				<#assign errors = spring.status.errorMessages[0]?split(',') />
 				<#list errors as error>
 					<li>${error}</li>
 				</#list>
+				<!-- show errors if the password don't match. -->
+				<@spring.bind "userDto" />
+				<#if spring.status.error><li><@spring.showErrors "<br>" /></li></#if>
 			</ul>
 			</#if>
 		</div>
 		<div><span id="error"></span></div>
-		<button id="submit_id" type="submit" onclick="return check();">Зарегистрироваться</button>
+		<button id="submit_id" type="submit">Зарегистрироваться</button>
 		
 	</form>
 
