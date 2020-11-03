@@ -4,11 +4,13 @@ import javax.validation.constraints.NotBlank;
 
 import com.example.PhotoLearn.validation.PasswordMatches;
 import com.example.PhotoLearn.validation.ValidPassword;
+import com.example.PhotoLearn.validation.ValidUsername;
 
 @PasswordMatches
 public class UserDto {
     
     @NotBlank(message = "Имя пользователя не должно быть пустым.")
+    @ValidUsername
     private String username;
     @ValidPassword
     private String password;
