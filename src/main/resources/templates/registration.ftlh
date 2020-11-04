@@ -3,21 +3,6 @@
 
 <@base.content title="Регистрация | Photo Learn">
 
-	<script>
-		function check() {
-			var password = document.getElementById("password").value;
-			var confirm_password = document.getElementById("confirmPassword").value;
-				
-			if (password == confirm_password) {
-				return true;
-			} else {
-			    document.getElementById('error').style.color = 'red';
-			    document.getElementById('error').innerHTML = 'not matching';
-			    return false;
-			}
-		}
-	</script>
-
 	<h2>Регистрация</h2>
 	
 	<form action="/registration" method="post">
