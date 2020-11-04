@@ -9,10 +9,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.services.IUserService;
 import com.example.PhotoLearn.web.dto.UserDto;
-import com.example.PhotoLearn.web.error.UserAlreadyExistsException;
 
 @Controller
 public class RegistrationController {
@@ -34,16 +32,11 @@ public class RegistrationController {
             Model model
     ) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("userDto", userDto);
+            model.addAttribute(userDto);
             return "registration";
         }
         
-        try {
-            User user = this.userService.registerNewUserAccount(userDto); 
-        } catch (UserAlreadyExistsException uaeException) {
-            model.addAttribute("message", "An account for that username already exists.");
-            return "registration";
-        }
+        this.userService.registerNewUserAccount(userDto); 
         
         return "redirect:/";
     }
