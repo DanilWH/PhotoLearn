@@ -4,15 +4,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class PostController {
+public class TutorialController {
     
     @GetMapping("/")
     public String index() {
-        return "redirect:/posts";
+        return "redirect:/tutorials";
     }
     
-    @GetMapping("/posts")
-    public String showPosts() {
+    @GetMapping("/tutorials")
+    public String showTutorials() {
         return null;
     }
 

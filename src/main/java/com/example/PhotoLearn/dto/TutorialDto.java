@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 
 import com.example.PhotoLearn.models.User;
 
-public class PostDto {
+public class TutorialDto {
     
     @NotBlank
     private String title;
