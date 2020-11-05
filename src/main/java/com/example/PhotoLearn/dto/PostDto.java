@@ -1,33 +1,21 @@
-package com.example.PhotoLearn.models;
+package com.example.PhotoLearn.dto;
 
 import java.time.Instant;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
-@Entity
-@Table(name = "posts")
-public class Post {
+import com.example.PhotoLearn.models.User;
+
+public class PostDto {
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @NotBlank
     private String title;
-    @Lob
+    @NotBlank
     private String content;
     private Instant createdOn;
     private Instant updatedOn;
-    @ManyToOne
     private User user;
     
-    public Long getId() {
-        return id;
-    }
     public String getTitle() {
         return title;
     }
@@ -42,9 +30,6 @@ public class Post {
     }
     public User getUser() {
         return user;
-    }
-    public void setId(Long id) {
-        this.id = id;
     }
     public void setTitle(String title) {
         this.title = title;

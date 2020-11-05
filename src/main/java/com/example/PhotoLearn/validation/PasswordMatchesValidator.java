@@ -3,7 +3,7 @@ package com.example.PhotoLearn.validation;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-import com.example.PhotoLearn.web.dto.UserDto;
+import com.example.PhotoLearn.dto.UserDto;
 
 public class PasswordMatchesValidator implements ConstraintValidator<PasswordMatches, Object> {
     

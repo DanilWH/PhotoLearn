@@ -9,14 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.PhotoLearn.services.IUserService;
-import com.example.PhotoLearn.web.dto.UserDto;
+import com.example.PhotoLearn.dto.UserDto;
+import com.example.PhotoLearn.services.UserService;
 
 @Controller
 public class RegistrationController {
     
     @Autowired
-    private IUserService userService;
+    private UserService userService;
     
     @GetMapping("/registration")
     public String registration(Model model) {

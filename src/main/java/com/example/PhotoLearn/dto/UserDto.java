@@ -1,4 +1,4 @@
-package com.example.PhotoLearn.web.dto;
+package com.example.PhotoLearn.dto;
 
 import javax.validation.constraints.NotBlank;
 
