@@ -1,5 +1,6 @@
 package com.example.PhotoLearn.models;
 
+import java.util.Collection;
 import java.util.Set;
 
 import javax.persistence.CollectionTable;
@@ -14,9 +15,12 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
 @Entity
 @Table(name = "users")
-public class User {
+public class User implements UserDetails{
     
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -69,6 +73,31 @@ public class User {
 
     public void setUserRoles(Set<UserRoles> userRoles) {
         this.userRoles = userRoles;
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return this.userRoles;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return this.active;
     }
     
 }

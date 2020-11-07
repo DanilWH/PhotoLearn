@@ -36,7 +36,7 @@ public class UserService {
     }
     
     public Optional<User> getCurrentUser() {
-        User principal = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return Optional.of(principal);
     }
     

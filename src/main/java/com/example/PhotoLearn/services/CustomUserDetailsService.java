@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.PhotoLearn.models.CustomUserDetails;
 import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.repositories.UserRepository;
 
@@ -24,6 +23,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         
         user.orElseThrow(() -> new UsernameNotFoundException("Not Found: " + username));
         
-        return user.map(CustomUserDetails::new).get();
+        return user.get();
     }
 }
