@@ -18,7 +18,7 @@ public class TutorialService {
     @Autowired
     private TutorialRepository tutorialRepository;
     
-    public void createNewPost(TutorialDto tutorialDto) {
+    public void createNewTutorial(TutorialDto tutorialDto) {
         Tutorial tutorial = new Tutorial();
         
         tutorial.setTitle(tutorialDto.getTitle());

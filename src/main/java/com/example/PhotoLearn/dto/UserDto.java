@@ -15,7 +15,6 @@ public class UserDto {
     @ValidPassword
     private String password;
     private String confirmPassword;
-    private boolean active;
     
     public String getUsername() {
         return this.username;
@@ -29,10 +28,6 @@ public class UserDto {
         return this.confirmPassword;
     }
 
-    public boolean isActive() {
-        return this.active;
-    }
-
     public void setUsername(String username) {
         this.username = username;
     }
@@ -43,9 +38,5 @@ public class UserDto {
     
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
     }
 }

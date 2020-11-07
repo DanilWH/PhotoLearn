@@ -8,9 +8,9 @@ import com.example.PhotoLearn.models.User;
 
 public class TutorialDto {
     
-    @NotBlank
+    @NotBlank(message = "Это поле должно быть заполнено")
     private String title;
-    @NotBlank
+    @NotBlank(message = "Это поле должно быть заполнено")
     private String content;
     private Instant createdOn;
     private Instant updatedOn;

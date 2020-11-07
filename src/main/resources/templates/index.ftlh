@@ -4,5 +4,5 @@
 <@base.content title="Главная | Photo Learn">
 
 	<h2>${(_user.username)?ifExists}</h2>
-
+	
 </@base.content>
