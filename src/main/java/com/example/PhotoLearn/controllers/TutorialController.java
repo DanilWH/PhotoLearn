@@ -1,5 +1,7 @@
 package com.example.PhotoLearn.controllers;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.PhotoLearn.dto.TutorialDto;
+import com.example.PhotoLearn.models.Tutorial;
+import com.example.PhotoLearn.repositories.TutorialRepository;
 import com.example.PhotoLearn.services.TutorialService;
 
 @Controller
 public class TutorialController {
     
+    @Autowired
+    private TutorialRepository tutorialRepository;
     @Autowired
     private TutorialService tutorialService;
     
@@ -24,8 +30,10 @@ public class TutorialController {
     }
     
     @GetMapping("/tutorials")
-    public String showTutorials() {
-        // TODO
+    public String showTutorials(Model model) {
+        List<Tutorial> tutorials = this.tutorialRepository.findAll();
+        model.addAttribute("tutorials", tutorials);
+        
         return "tutorials";
     }
     

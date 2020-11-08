@@ -3,6 +3,13 @@
 
 <@base.content title="Новый урок | Photo Learn">
 
+	<script>
+		function show() {
+			document.getElementById("content").value = tinymce.get("content").getContent({ format: "text" });
+			alert(document.getElementById("content").value)
+		}
+	</script>
+
 	<h1>Новый урок</h1>
 	
 	<form action="/tutorial/new" method="post">
@@ -14,7 +21,6 @@
 		</div>
 		<div>
 			<label for="content">Содержимое: </label>
-			<!-- <textarea rows="50"></textarea> -->
 			<@spring.formTextarea "tutorialDto.content" />
 			<@spring.showErrors "<br>" />
 		</div>

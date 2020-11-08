@@ -22,7 +22,7 @@ public class TutorialService {
         Tutorial tutorial = new Tutorial();
         
         tutorial.setTitle(tutorialDto.getTitle());
-        tutorial.setContent(tutorialDto.getContent());
+        tutorial.setContent(tutorialDto.getContent().replace("\r\n", ""));
         tutorial.setCreatedOn(Instant.now());
         User user = this.userService.getCurrentUser().orElseThrow(
                 () -> new IllegalArgumentException("No user logged in"));

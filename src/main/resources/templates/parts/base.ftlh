@@ -13,8 +13,8 @@
         <script>
         tinymce.init({
             selector: 'textarea',
-            plugins: 'a11ychecker advcode casechange formatpainter linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tinycomments tinymcespellchecker',
-            toolbar: 'a11ycheck casechange checklist code pageembed permanentpen table',
+            plugins: 'autoresize advcode casechange emoticons image formatpainter link lists checklist media mediaembed pageembed permanentpen powerpaste table advtable',
+            toolbar: 'bold italic strikethrough link casechange numlist bullist checklist blockquote emoticons image media pageembed permanentpen table',
             toolbar_mode: 'floating',
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
@@ -23,8 +23,9 @@
     </head>
     <body>
     	<#if _user??>
-    		Здравствуйте, ${_user.username}! -
+    		<a href="/tutorials">Уроки</a> -
     		<a href="/tutorial/new">Создать новый урок.</a> -
+    		Здравствуйте, ${_user.username}!
     		<form action="/logout" method="post">
     			<input type="hidden" name="_csrf" value="${_csrf.token}" />
     			<button type="submit">Выйти</button>
