@@ -28,5 +28,8 @@
 			<button type="submit">Добавить</button>
 		</div>
 	</form>
+	
+	<!-- Load the TinyMCE text editor. -->
+	<#include "parts/tinymce_load.ftlh" />
 
 </@base.content>

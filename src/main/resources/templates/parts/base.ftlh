@@ -6,20 +6,6 @@
 <html>
     <head>
         <title>${title}</title>
-        <script
-        		src="https://cdn.tiny.cloud/1/q0kqyzka6qc7uvpaz9yl7hki9vlqhs4snpkw05o6t9lqjkq2/tinymce/5/tinymce.min.js"
-        		referrerpolicy="origin"
-        ></script>
-        <script>
-        tinymce.init({
-            selector: 'textarea',
-            plugins: 'autoresize advcode casechange emoticons image formatpainter link lists checklist media mediaembed pageembed permanentpen powerpaste table advtable',
-            toolbar: 'bold italic strikethrough link casechange numlist bullist checklist blockquote emoticons image media pageembed permanentpen table',
-            toolbar_mode: 'floating',
-            tinycomments_mode: 'embedded',
-            tinycomments_author: 'Author name',
-          });
-	  </script>
     </head>
     <body>
     	<#if _user??>
