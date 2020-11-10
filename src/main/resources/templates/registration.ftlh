@@ -30,18 +30,21 @@
 			
 			
 			
-			<!-- show error messages for the password. -->
-			<@spring.bind "userDto.password" />
-			<#if spring.status.errorMessages[0]??>
-			<ul>
-				<#assign errors = spring.status.errorMessages[0]?split(',') />
-				<#list errors as error>
-					<li>${error}</li>
-				</#list>
-				<!-- show errors if the password don't match. -->
-				<@spring.bind "userDto" />
-				<#if spring.status.error><li><@spring.showErrors "<br>" /></li></#if>
-			</ul>
+			<!-- show errors if the password don't match. -->
+			<@spring.bind "userDto" />
+			<#if spring.status.error>
+				<ul><li><@spring.showErrors "<br>" /></li></ul>
+			<#else>
+				<!-- show error messages for the password. -->
+				<@spring.bind "userDto.password" />
+				<#if spring.status.error>
+				<ul>
+					<#assign errors = spring.status.errorMessages[0]?split(',') />
+					<#list errors as error>
+						<li>${error}</li>
+					</#list>
+				</ul>
+				</#if>
 			</#if>
 		</div>
 		<div><span id="error"></span></div>

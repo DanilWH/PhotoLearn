@@ -30,7 +30,7 @@ public class UserService {
         user.setUsername(accountDto.getUsername());
         user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setActive(true);
-        user.setUserRoles(Collections.singleton(UserRoles.STUDENT));
+        user.setUserRoles(Collections.singleton(UserRoles.ROLE_STUDENT));
         
         return this.userRepository.save(user);
     }
