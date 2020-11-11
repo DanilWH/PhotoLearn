@@ -4,10 +4,10 @@
 
 	<h1>Уроки</h1>
 	
-	<#list tutorials as tutorial>
-		<h3>${tutorial.title}</h3>
-		<div>${tutorial.content?no_esc}</div>
-		<hr />
-	</#list>
+	<ul>
+		<#list tutorials as tutorial>
+			<li><h2><a href="/tutorial/${tutorial.id}">${tutorial.title}</a></h2></li>
+		</#list>
+	</ul>
 
 </@base.content>

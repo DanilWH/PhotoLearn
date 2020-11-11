@@ -2,13 +2,16 @@ package com.example.PhotoLearn.controllers;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
 import javax.validation.Valid;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.PhotoLearn.dto.TutorialDto;
@@ -35,6 +38,25 @@ public class TutorialController {
         model.addAttribute("tutorials", tutorials);
         
         return "tutorials";
+    }
+    
+    @GetMapping("/tutorial/{tutorialId}")
+    public String showSingleTutorial(
+            @PathVariable Long tutorialId,
+            Model model
+    ) {
+        // create the ModelMapper object.
+        ModelMapper modelMapper = new ModelMapper();
+        
+        // find the tutorial by its ID.
+        Tutorial tutorial = this.tutorialRepository.findById(tutorialId).orElseThrow(() -> new NoResultException());
+        // map the found tutorial into the DTO.
+        TutorialDto tutorialDto = modelMapper.map(tutorial, TutorialDto.class);
+        
+        // put the tutorial DTO into the model.
+        model.addAttribute(tutorialDto);
+        
+        return "tutorial";
     }
     
     @GetMapping("/tutorial/new")
