@@ -25,6 +25,10 @@
 			<@spring.showErrors "<br>" />
 		</div>
 		<div>
+			<label for="imgEditorIsInjected">Добавить встроенный редактор изображения?</label>
+			<input type="checkbox" name="imgEditorIsInjected" value="true" />
+		</div>
+		<div>
 			<button type="submit">Добавить</button>
 		</div>
 	</form>

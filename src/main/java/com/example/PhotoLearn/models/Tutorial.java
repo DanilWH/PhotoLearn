@@ -22,6 +22,7 @@ public class Tutorial {
     private String content;
     private Instant createdOn;
     private Instant updatedOn;
+    private boolean imgEditorIsInjected;
     @ManyToOne
     private User user;
     
@@ -39,6 +40,9 @@ public class Tutorial {
     }
     public Instant getUpdatedOn() {
         return updatedOn;
+    }
+    public boolean isImgEditorIsInjected() {
+        return imgEditorIsInjected;
     }
     public User getUser() {
         return user;
@@ -60,5 +64,8 @@ public class Tutorial {
     }
     public void setUser(User user) {
         this.user = user;
+    }
+    public void setImgEditorIsInjected(boolean imgEditorIsInjected) {
+        this.imgEditorIsInjected = imgEditorIsInjected;
     }
 }

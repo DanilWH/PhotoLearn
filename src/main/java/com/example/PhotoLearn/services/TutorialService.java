@@ -24,6 +24,7 @@ public class TutorialService {
         tutorial.setTitle(tutorialDto.getTitle());
         tutorial.setContent(tutorialDto.getContent().replace("\r\n", ""));
         tutorial.setCreatedOn(Instant.now());
+        tutorial.setImgEditorIsInjected(tutorialDto.isImgEditorIsInjected());
         User user = this.userService.getCurrentUser().orElseThrow(
                 () -> new IllegalArgumentException("No user logged in"));
         tutorial.setUser(user);
