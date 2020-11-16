@@ -1,7 +1,10 @@
 package com.example.PhotoLearn.dto;
 
+import java.util.Set;
+
 import javax.validation.constraints.NotBlank;
 
+import com.example.PhotoLearn.models.UserRoles;
 import com.example.PhotoLearn.validation.PasswordMatches;
 import com.example.PhotoLearn.validation.ValidPassword;
 import com.example.PhotoLearn.validation.ValidUsername;
@@ -15,7 +18,8 @@ public class UserDto {
     @ValidPassword
     private String password;
     private String confirmPassword;
-    
+    private Set<UserRoles> userRoles;
+
     public String getUsername() {
         return this.username;
     }
@@ -26,6 +30,10 @@ public class UserDto {
     
     public String getConfirmPassword() {
         return this.confirmPassword;
+    }
+    
+    public Set<UserRoles> getUserRoles() {
+        return this.userRoles;
     }
 
     public void setUsername(String username) {
@@ -38,5 +46,9 @@ public class UserDto {
     
     public void setConfirmPassword(String confirmPassword) {
         this.confirmPassword = confirmPassword;
+    }
+    
+    public void setUserRoles(Set<UserRoles> userRoles) {
+        this.userRoles = userRoles;
     }
 }

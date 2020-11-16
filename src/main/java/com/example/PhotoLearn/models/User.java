@@ -34,7 +34,7 @@ public class User implements UserDetails{
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<UserRoles> userRoles;
-
+    
     public Long getId() {
         return this.id;
     }
