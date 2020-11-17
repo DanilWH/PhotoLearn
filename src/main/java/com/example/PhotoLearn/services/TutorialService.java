@@ -28,7 +28,7 @@ public class TutorialService {
         Instant createdOn = Instant.now();
         tutorial.setCreatedOn(createdOn);
         tutorial.setUpdatedOn(createdOn);
-        
+
         tutorial.setImgEditorIsInjected(tutorialDto.isImgEditorIsInjected());
 
         // set the user that created the tutorial.

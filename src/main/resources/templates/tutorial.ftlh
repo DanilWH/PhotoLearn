@@ -6,8 +6,9 @@
 	<#if tutorialDto.imgEditorIsInjected>
 		<#include "parts/toast_image_editor/css_data.ftlh" />
 	</#if>
-	
 
+	<div><a href="/tutorial/${tutorialDto.id}/edit">Редактировать урок</a></div>
+	
 	<!-- The content of the page. -->
 	<h1>${tutorialDto.title}</h1>
 	

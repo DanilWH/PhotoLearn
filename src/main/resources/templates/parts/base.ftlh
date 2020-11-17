@@ -25,7 +25,8 @@
     		<a href="/login">Войти</a> -
     		<a href="/registration">Зарегестрироваться</a>
     	</#if>
-    	
+    	<hr />
+
         <#nested />
     </body>
 </html>
