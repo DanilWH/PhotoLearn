@@ -1,6 +1,8 @@
 package com.example.PhotoLearn.controllers.student;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.NoResultException;
 
@@ -30,8 +32,11 @@ public class StudentTutorialController {
     
     @GetMapping("/tutorials")
     public String showTutorials(Model model) {
-        List<Tutorial> tutorials = this.tutorialRepository.findAll();
-        model.addAttribute("tutorials", tutorials);
+        List<TutorialDto> tutorialsDto = this.tutorialRepository.findAll().stream().map(entity ->
+            new ModelMapper().map(entity, TutorialDto.class)
+        ).collect(Collectors.toList());
+
+        model.addAttribute("tutorials", tutorialsDto);
         
         return "tutorials";
     }

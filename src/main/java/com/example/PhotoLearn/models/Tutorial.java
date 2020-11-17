@@ -25,7 +25,7 @@ public class Tutorial {
     private boolean imgEditorIsInjected;
     @ManyToOne
     private User user;
-    
+
     public Long getId() {
         return id;
     }

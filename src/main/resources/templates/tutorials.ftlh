@@ -6,7 +6,16 @@
 	
 	<ul>
 		<#list tutorials as tutorial>
-			<li><h2><a href="/tutorial/${tutorial.id}">${tutorial.title}</a></h2></li>
+			<li><div>
+					<h2><a href="/tutorial/${tutorial.id}">${tutorial.title}</a></h2>
+				</div>
+				<hr />
+				<div align="right">
+					Created: <i>${tutorial.getFormattedCreatedOn(tutorial.createdOn)}</i> -
+					Updated: <i>${tutorial.getFormattedCreatedOn(tutorial.updatedOn)}</i> -
+					<i>${tutorial.user.getUsername()}</i>
+				</div>
+			</li>
 		</#list>
 	</ul>
 

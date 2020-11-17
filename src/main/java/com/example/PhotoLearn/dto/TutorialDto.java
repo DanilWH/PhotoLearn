@@ -1,13 +1,17 @@
 package com.example.PhotoLearn.dto;
 
+import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
 import javax.validation.constraints.NotBlank;
 
 import com.example.PhotoLearn.models.User;
 
 public class TutorialDto {
-    
+
+    private Long id;
     @NotBlank(message = "Это поле должно быть заполнено")
     private String title;
     @NotBlank(message = "Это поле должно быть заполнено")
@@ -16,7 +20,17 @@ public class TutorialDto {
     private Instant updatedOn;
     private boolean imgEditorIsInjected;
     private User user;
-    
+
+    public String getFormattedCreatedOn(Instant instantDate) {
+        Date date = Date.from(instantDate);
+
+        SimpleDateFormat formatter = new SimpleDateFormat("MMMM d, Y HH:mm");
+        return formatter.format(date);
+    }
+
+    public Long getId() {
+        return id;
+    }
     public String getTitle() {
         return title;
     }
@@ -34,6 +48,9 @@ public class TutorialDto {
     }
     public User getUser() {
         return user;
+    }
+    public void setId(Long id) {
+        this.id = id;
     }
     public void setTitle(String title) {
         this.title = title;

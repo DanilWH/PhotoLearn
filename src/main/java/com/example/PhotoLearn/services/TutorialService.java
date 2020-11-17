@@ -23,8 +23,15 @@ public class TutorialService {
         
         tutorial.setTitle(tutorialDto.getTitle());
         tutorial.setContent(tutorialDto.getContent().replace("\r\n", ""));
-        tutorial.setCreatedOn(Instant.now());
+
+        // set the time that the tutorial was created on.
+        Instant createdOn = Instant.now();
+        tutorial.setCreatedOn(createdOn);
+        tutorial.setUpdatedOn(createdOn);
+        
         tutorial.setImgEditorIsInjected(tutorialDto.isImgEditorIsInjected());
+
+        // set the user that created the tutorial.
         User user = this.userService.getCurrentUser().orElseThrow(
                 () -> new IllegalArgumentException("No user logged in"));
         tutorial.setUser(user);
