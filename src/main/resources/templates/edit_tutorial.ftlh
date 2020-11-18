@@ -7,7 +7,7 @@
     <!-- load the TinyMCE editor -->
     <@common.tutorial_editor
         header="Редактировать урок"
-        action="/tutorial/edit"
+        action="/tutorial/${tutorialDto.id}/edit"
         tutorialDto=tutorialDto
         titleValue="${tutorialDto.title}"
         contentValue="${tutorialDto.content}"

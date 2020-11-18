@@ -39,4 +39,16 @@ public class TutorialService {
         this.tutorialRepository.save(tutorial);
     }
 
+    public void updateExistingTutorial(TutorialDto tutorialDto, Tutorial tutorial) {
+        // set new values to the fields that might be changed.
+        tutorial.setTitle(tutorialDto.getTitle());
+        tutorial.setContent(tutorialDto.getContent());
+        tutorial.setImgEditorIsInjected(tutorialDto.isImgEditorIsInjected());
+        tutorial.setUpdatedOn(Instant.now());
+
+        // update the tutorial in the database.
+        this.tutorialRepository.save(tutorial);
+
+    }
+
 }

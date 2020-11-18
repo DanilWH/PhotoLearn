@@ -40,7 +40,7 @@ public class TeacherTutorialController {
             BindingResult bindingResult,
             Model model
     ) {
-        // check if the fields have errors.
+        // the fields validation.
         if (bindingResult.hasErrors()) {
             model.addAttribute(tutorialDto);
             return "new_tutorial";
@@ -61,8 +61,27 @@ public class TeacherTutorialController {
         ModelMapper modelMapper = new ModelMapper();
         TutorialDto tutorialDto = modelMapper.map(tutorial, TutorialDto.class);
 
-        model.addAttribute("tutorialDto", tutorialDto);
+        model.addAttribute(tutorialDto);
 
         return "edit_tutorial";
+    }
+
+    @PostMapping("/tutorial/{tutorialId}/edit")
+    public String updateTutorial(
+            @PathVariable Long tutorialId,
+            @Valid TutorialDto tutorialDto,
+            BindingResult bindingResult,
+            Model model
+    ) {
+        // the fields validation.
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(tutorialDto);
+            return "edit_tutorial";
+        }
+        Tutorial tutorial = this.tutorialRepository.findById(tutorialId).orElseThrow(() -> new NoResultException());
+
+        this.tutorialService.updateExistingTutorial(tutorialDto, tutorial);
+
+        return "redirect:/tutorial/" + tutorialId;
     }
 }
