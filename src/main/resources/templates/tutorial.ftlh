@@ -9,8 +9,12 @@
 		<#include "parts/toast_image_editor/css_data.ftlh" />
 	</#if>
 
+
 	<@security.authorize access="hasRole('ROLE_TEACHER')">
-		<div><a href="/tutorial/${tutorialDto.id}/edit">Редактировать урок</a></div>
+		<div>
+			<a href="/tutorial/${tutorialDto.id}/edit">Редактировать урок</a> |
+			<a href="/tutorial/${tutorialDto.id}/delete">Удалить урок</a>
+		</div>
 	</@security.authorize>
 	
 	<!-- The content of the page. -->

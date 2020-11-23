@@ -2,6 +2,7 @@ package com.example.PhotoLearn.services;
 
 import java.time.Instant;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +10,8 @@ import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.models.Tutorial;
 import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.repositories.TutorialRepository;
+
+import javax.persistence.NoResultException;
 
 @Service
 public class TutorialService {
@@ -49,6 +52,21 @@ public class TutorialService {
         // update the tutorial in the database.
         this.tutorialRepository.save(tutorial);
 
+    }
+
+    public TutorialDto getDtoById(Long tutorialId) {
+        // extract the necessary tutorial from the database.
+        Tutorial tutorial = this.getById(tutorialId);
+
+        // map the extracted tutorial into DTO.
+        ModelMapper modelMapper = new ModelMapper();
+        TutorialDto tutorialDto = modelMapper.map(tutorial, TutorialDto.class);
+
+        return tutorialDto;
+    }
+
+    public Tutorial getById(Long tutorialId) {
+        return this.tutorialRepository.findById(tutorialId).orElseThrow(() -> new NoResultException());
     }
 
 }

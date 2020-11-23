@@ -21,19 +21,19 @@ import com.example.PhotoLearn.services.TutorialService;
 @Controller
 @PreAuthorize("hasRole('TEACHER')")
 public class TeacherTutorialController {
-    
+
     @Autowired
     TutorialService tutorialService;
     @Autowired
     TutorialRepository tutorialRepository;
-    
+
     @GetMapping("/tutorial/new")
     public String newTutorial(Model model) {
         model.addAttribute("tutorialDto", new TutorialDto());
-        
+
         return "new_tutorial";
     }
-    
+
     @PostMapping("/tutorial/new")
     public String addTutorial(
             @Valid TutorialDto tutorialDto,
@@ -45,9 +45,9 @@ public class TeacherTutorialController {
             model.addAttribute(tutorialDto);
             return "new_tutorial";
         }
-        
+
         tutorialService.createNewTutorial(tutorialDto);
-        
+
         return "redirect:/";
     }
 
@@ -56,10 +56,7 @@ public class TeacherTutorialController {
             @PathVariable Long tutorialId,
             Model model
     ) {
-        Tutorial tutorial = this.tutorialRepository.findById(tutorialId).orElseThrow(() -> new NoResultException());
-
-        ModelMapper modelMapper = new ModelMapper();
-        TutorialDto tutorialDto = modelMapper.map(tutorial, TutorialDto.class);
+        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId);
 
         model.addAttribute(tutorialDto);
 
@@ -78,10 +75,31 @@ public class TeacherTutorialController {
             model.addAttribute(tutorialDto);
             return "edit_tutorial";
         }
-        Tutorial tutorial = this.tutorialRepository.findById(tutorialId).orElseThrow(() -> new NoResultException());
+        Tutorial tutorial = this.tutorialService.getById(tutorialId);
 
         this.tutorialService.updateExistingTutorial(tutorialDto, tutorial);
 
         return "redirect:/tutorial/" + tutorialId;
+    }
+
+    @GetMapping("/tutorial/{tutorialId}/delete")
+    public String deleteTutorialConfirmation(
+            @PathVariable Long tutorialId,
+            Model model
+    ) {
+        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId);
+        model.addAttribute(tutorialDto);
+
+        return "delete_tutorial_confirmation";
+    }
+
+    @PostMapping("/tutorial/{tutorialId}/delete")
+    public String deleteTutorial(
+            @PathVariable Long tutorialId
+    ) {
+        Tutorial tutorial = this.tutorialService.getById(tutorialId);
+        this.tutorialRepository.delete(tutorial);
+
+        return "redirect:/";
     }
 }
