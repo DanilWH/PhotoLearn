@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.services.TutorialService;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @PreAuthorize("hasRole('TEACHER')")
+@RequestMapping("/tutorial")
 public class TeacherTutorialController {
 
     @Autowired
@@ -27,14 +29,14 @@ public class TeacherTutorialController {
     @Autowired
     TutorialRepository tutorialRepository;
 
-    @GetMapping("/tutorial/new")
+    @GetMapping("/new")
     public String newTutorial(Model model) {
         model.addAttribute("tutorialDto", new TutorialDto());
 
         return "new_tutorial";
     }
 
-    @PostMapping("/tutorial/new")
+    @PostMapping("/new")
     public String addTutorial(
             @Valid TutorialDto tutorialDto,
             BindingResult bindingResult,
@@ -51,7 +53,7 @@ public class TeacherTutorialController {
         return "redirect:/";
     }
 
-    @GetMapping("/tutorial/{tutorialId}/edit")
+    @GetMapping("/{tutorialId}/edit")
     public String editTutorial(
             @PathVariable Long tutorialId,
             Model model
@@ -63,7 +65,7 @@ public class TeacherTutorialController {
         return "edit_tutorial";
     }
 
-    @PostMapping("/tutorial/{tutorialId}/edit")
+    @PostMapping("/{tutorialId}/edit")
     public String updateTutorial(
             @PathVariable Long tutorialId,
             @Valid TutorialDto tutorialDto,
@@ -82,7 +84,7 @@ public class TeacherTutorialController {
         return "redirect:/tutorial/" + tutorialId;
     }
 
-    @GetMapping("/tutorial/{tutorialId}/delete")
+    @GetMapping("/{tutorialId}/delete")
     public String deleteTutorialConfirmation(
             @PathVariable Long tutorialId,
             Model model
@@ -93,7 +95,7 @@ public class TeacherTutorialController {
         return "delete_tutorial_confirmation";
     }
 
-    @PostMapping("/tutorial/{tutorialId}/delete")
+    @PostMapping("/{tutorialId}/delete")
     public String deleteTutorial(
             @PathVariable Long tutorialId
     ) {

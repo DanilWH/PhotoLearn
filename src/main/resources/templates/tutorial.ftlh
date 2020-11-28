@@ -1,5 +1,5 @@
 <#import "parts/base.ftlh" as base />
-
+<#import "spring.ftl" as spring />
 <#assign  security=JspTaglibs["http://www.springframework.org/security/tags"] />
 
 <@base.content title="${tutorialDto.title} | Photo Learn">
@@ -25,6 +25,7 @@
 		<hr />
 		<div align="right">by <i>${tutorialDto.user.getUsername()}</i></div>
 	</div>
+
 	
 	
 	<!-- The 'toast' editor js files. -->

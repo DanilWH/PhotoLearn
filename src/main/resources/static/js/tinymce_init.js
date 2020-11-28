@@ -1,5 +1,5 @@
 tinymce.init({
-    selector: 'textarea',
+    selector: '#content',
     plugins: 'autoresize advcode casechange emoticons image formatpainter link lists checklist media mediaembed pageembed permanentpen powerpaste table advtable',
     toolbar: 'bold italic strikethrough link casechange numlist bullist checklist blockquote emoticons image media pageembed permanentpen table',
     toolbar_mode: 'floating',

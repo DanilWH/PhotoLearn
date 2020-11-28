@@ -3,6 +3,7 @@ package com.example.PhotoLearn.services;
 import java.util.Collections;
 import java.util.Optional;
 
+import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,10 @@ public class UserService {
     public Optional<User> getCurrentUser() {
         User principal = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return Optional.of(principal);
+    }
+
+    public User getCurrentUserOrElseThrow() {
+        return getCurrentUser().orElseThrow(() -> new NoResultException());
     }
     
 }
