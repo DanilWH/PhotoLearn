@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 
 import javax.persistence.NoResultException;
 
+import com.example.PhotoLearn.dto.PhotoResultDto;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -56,7 +57,8 @@ public class StudentTutorialController {
         
         // put the tutorial DTO into the model.
         model.addAttribute(tutorialDto);
-        
+        model.addAttribute("photoResultDto", new PhotoResultDto());
+
         return "tutorial";
     }
 }

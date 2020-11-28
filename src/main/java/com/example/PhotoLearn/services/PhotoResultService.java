@@ -39,7 +39,7 @@ public class PhotoResultService {
 
         // set the fields with the values of the DTO.
         photoResult.setDescription(photoResultDto.getDescription());
-        photoResult.setFilename(filename); // TODO
+        photoResult.setFilename(filename);
         photoResult.setUser(this.userService.getCurrentUserOrElseThrow());
         photoResult.setTutorial(photoResultDto.getTutorial());
 

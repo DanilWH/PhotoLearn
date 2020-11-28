@@ -26,6 +26,18 @@
 		<div align="right">by <i>${tutorialDto.user.getUsername()}</i></div>
 	</div>
 
+	<!-- The "PhotoResult" form -->
+	<form action="/tutorial/${tutorialDto.id}/photo-result/add" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="_csrf" value="${_csrf.token}" />
+
+		<div>
+			<label for="description">Описание</label>
+			<@spring.formTextarea "photoResultDto.description" />
+			<@spring.showErrors "<br>" />
+		</div>
+		<div><input name="multipartFile" type="file" /></div>
+		<div><button type="submit">Отправить</button></div>
+	</form>
 	
 	
 	<!-- The 'toast' editor js files. -->

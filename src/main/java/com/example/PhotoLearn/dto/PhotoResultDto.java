@@ -2,16 +2,12 @@ package com.example.PhotoLearn.dto;
 
 import com.example.PhotoLearn.models.Tutorial;
 import com.example.PhotoLearn.models.User;
-import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 public class PhotoResultDto {
 
     private Long id;
-    @NotBlank
-    @Size(max = 200)
+    @Size(max = 200, message = "Описание не должно быть длиной больше чем 200 символов.")
     private String description;
     private String filename;
     private Tutorial tutorial;

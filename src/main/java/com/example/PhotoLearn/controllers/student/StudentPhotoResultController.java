@@ -8,6 +8,7 @@ import com.example.PhotoLearn.services.TutorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,9 +32,17 @@ public class StudentPhotoResultController {
     public String addPhotoResult(
             @PathVariable Long tutorialId,
             @Valid PhotoResultDto photoResultDto,
+            BindingResult bindingResult,
             @RequestParam MultipartFile multipartFile,
             Model model
     ) throws Exception {
+        // check if the description length is less than 200 characters.
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("tutorialDto", this.tutorialService.getDtoById(tutorialId));
+            model.addAttribute("photoResultDto", photoResultDto);
+            return "tutorial";
+        }
+
         // find the tutorial that is going to be the parent for the PhotoResult
         // and set it to DTO.
         photoResultDto.setTutorial(this.tutorialService.getById(tutorialId));

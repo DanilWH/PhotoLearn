@@ -3,6 +3,7 @@ package com.example.PhotoLearn.models;
 import javax.persistence.*;
 
 @Entity
+@Table(name = "photo_results")
 public class PhotoResult {
 
     @Id
