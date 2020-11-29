@@ -2,10 +2,13 @@ package com.example.PhotoLearn.controllers.student;
 
 import com.example.PhotoLearn.dto.PhotoResultDto;
 import com.example.PhotoLearn.models.Tutorial;
+import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.repositories.TutorialRepository;
 import com.example.PhotoLearn.services.PhotoResultService;
 import com.example.PhotoLearn.services.TutorialService;
+import com.example.PhotoLearn.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 import java.io.IOException;
@@ -24,9 +28,10 @@ public class StudentPhotoResultController {
 
     @Autowired
     private TutorialService tutorialService;
-
     @Autowired
     private PhotoResultService photoResultService;
+    @Autowired
+    private UserService userService;
 
     @PostMapping("/{tutorialId}/photo-result/add")
     public String addPhotoResult(
@@ -36,6 +41,11 @@ public class StudentPhotoResultController {
             @RequestParam MultipartFile multipartFile,
             Model model
     ) throws Exception {
+        // forbid adding a PhotoResult if the current user is not a student.
+        // (in the case if a teacher or the admin got an accidentional access to the mapping)
+        if (!this.userService.getCurrentUserOrElseThrow().isStudent())
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+
         // check if the description length is less than 200 characters.
         if (bindingResult.hasErrors()) {
             model.addAttribute("tutorialDto", this.tutorialService.getDtoById(tutorialId));

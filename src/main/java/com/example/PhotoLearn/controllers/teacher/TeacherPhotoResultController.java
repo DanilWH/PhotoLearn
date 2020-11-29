@@ -3,6 +3,7 @@ package com.example.PhotoLearn.controllers.teacher;
 import com.example.PhotoLearn.dto.PhotoResultDto;
 import com.example.PhotoLearn.models.PhotoResult;
 import com.example.PhotoLearn.repositories.PhotoResultRepository;
+import com.example.PhotoLearn.services.TutorialService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,6 +23,9 @@ import java.util.stream.Collectors;
 public class TeacherPhotoResultController {
 
     @Autowired
+    private TutorialService tutorialService;
+
+    @Autowired
     private PhotoResultRepository photoResultRepository;
 
     @GetMapping("/{tutorialId}/photo-results")
@@ -36,7 +40,8 @@ public class TeacherPhotoResultController {
                 })
                 .collect(Collectors.toList());
 
-        model.addAttribute(photoResultsDto);
+        model.addAttribute("photoResultsDto", photoResultsDto);
+        model.addAttribute("tutorialDto", this.tutorialService.getDtoById(tutorialId));
 
         return "photo_results";
     }
