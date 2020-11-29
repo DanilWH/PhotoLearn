@@ -7,6 +7,13 @@ import java.util.stream.Collectors;
 import javax.persistence.NoResultException;
 
 import com.example.PhotoLearn.dto.PhotoResultDto;
+import com.example.PhotoLearn.models.PhotoResult;
+import com.example.PhotoLearn.models.User;
+import com.example.PhotoLearn.models.UserRoles;
+import com.example.PhotoLearn.repositories.PhotoResultRepository;
+import com.example.PhotoLearn.services.PhotoResultService;
+import com.example.PhotoLearn.services.TutorialService;
+import com.example.PhotoLearn.services.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,9 +29,18 @@ import com.example.PhotoLearn.repositories.TutorialRepository;
 @Controller
 @PreAuthorize("hasRole('STUDENT')")
 public class StudentTutorialController {
-    
+
+    @Autowired
+    private TutorialService tutorialService;
+    @Autowired
+    private PhotoResultService photoResultService;
+    @Autowired
+    private UserService userService;
+
     @Autowired
     private TutorialRepository tutorialRepository;
+    @Autowired
+    private PhotoResultRepository photoResultRepository;
     
     @GetMapping("/")
     public String index() {
@@ -47,17 +63,23 @@ public class StudentTutorialController {
             @PathVariable Long tutorialId,
             Model model
     ) {
-        // create the ModelMapper object.
-        ModelMapper modelMapper = new ModelMapper();
-        
-        // find the tutorial by its ID.
-        Tutorial tutorial = this.tutorialRepository.findById(tutorialId).orElseThrow(() -> new NoResultException());
-        // map the found tutorial into the DTO.
-        TutorialDto tutorialDto = modelMapper.map(tutorial, TutorialDto.class);
-        
+        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId);
+
         // put the tutorial DTO into the model.
         model.addAttribute(tutorialDto);
-        model.addAttribute("photoResultDto", new PhotoResultDto());
+
+        User currentUser = this.userService.getCurrentUserOrElseThrow();
+
+        if (currentUser.getUserRoles().contains(UserRoles.ROLE_STUDENT)) {
+            // find the "photo result" by its tutorial id and user id.
+            PhotoResult photoResult = this.photoResultRepository.findByTutorialIdAndUserId(tutorialId, currentUser.getId());
+            // find out whether we need to put the DTO of the photo result
+            // that is already in the database or we need to create a new DTO.
+            PhotoResultDto photoResultDto = (photoResult != null)? this.photoResultService.mapFromEntityToDto(photoResult) : new PhotoResultDto();
+
+            // put a new DTO instance of the user photo result.
+            model.addAttribute("photoResultDto", photoResultDto);
+        }
 
         return "tutorial";
     }

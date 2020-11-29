@@ -25,7 +25,7 @@ public class TeacherPhotoResultController {
     private PhotoResultRepository photoResultRepository;
 
     @GetMapping("/{tutorialId}/photo-results")
-    public String loadPhotoResults(
+    public String showPhotoResults(
             @PathVariable Long tutorialId,
             Model model
     ) {

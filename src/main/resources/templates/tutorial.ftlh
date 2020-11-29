@@ -1,5 +1,6 @@
 <#import "parts/base.ftlh" as base />
 <#import "spring.ftl" as spring />
+<#include "parts/user_security.ftlh" />
 <#assign  security=JspTaglibs["http://www.springframework.org/security/tags"] />
 
 <@base.content title="${tutorialDto.title} | Photo Learn">
@@ -27,17 +28,55 @@
 	</div>
 
 	<!-- The "PhotoResult" form -->
-	<form action="/tutorial/${tutorialDto.id}/photo-result/add" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="_csrf" value="${_csrf.token}" />
+	<#if _user.isTeacher()>
+		<a href="/tutorial/${tutorialDto.id}/photo-results">Просмотреть результаты студентов</a>
+	<#elseif _user.isStudent()>
+		<#if photoResultDto.id??>
+			<!-- Show the description and the photo if the student has already uploaded a photo result -->
+			<p>${photoResultDto.description}</p>
+			<img src="/img/${photoResultDto.filename}" />
+		<#else>
+			<!-- Create a new form if the student hasn't uploaded a photo result. -->
+			<form action="/tutorial/${tutorialDto.id}/photo-result/add" method="post" enctype="multipart/form-data">
+				<input type="hidden" name="_csrf" value="${_csrf.token}" />
 
-		<div>
-			<label for="description">Описание</label>
-			<@spring.formTextarea "photoResultDto.description" />
-			<@spring.showErrors "<br>" />
-		</div>
-		<div><input name="multipartFile" type="file" /></div>
-		<div><button type="submit">Отправить</button></div>
-	</form>
+				<div>
+					<label for="description">Описание</label>
+					<@spring.formTextarea "photoResultDto.description" />
+					<@spring.showErrors "<br>" />
+				</div>
+				<div>
+					<input id="multipartFile" name="multipartFile" type="file"
+						   accept="image/*"
+						   onchange="return fileValidation();"
+					/>
+					<div id="imagePreview"></div>
+					<script>
+						function fileValidation() {
+							var fileInput =  document.getElementById('multipartFile');
+							var filePath = fileInput.value;
+
+							// Image preview
+							if (fileInput.files && fileInput.files[0]) {
+								var reader = new FileReader();
+								reader.onload = function(e) {
+									document.getElementById('imagePreview').innerHTML =
+										'<img src="' + e.target.result + '"/>';
+								};
+
+								reader.readAsDataURL(fileInput.files[0]);
+								document.getElementById('submitBtn').disabled = false;
+							}
+							else {
+								document.getElementById('submitBtn').disabled = true;
+							}
+						}
+					</script>
+				</div>
+				<div><button id="submitBtn" type="submit" disabled="true">Отправить</button></div>
+			</form>
+		</#if>
+	</#if>
 	
 	
 	<!-- The 'toast' editor js files. -->

@@ -34,6 +34,18 @@ public class User implements UserDetails{
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<UserRoles> userRoles;
+
+    public boolean isAdmin() {
+        return this.userRoles.contains(UserRoles.ROLE_ADMIN);
+    }
+
+    public boolean isTeacher() {
+        return this.userRoles.contains(UserRoles.ROLE_TEACHER);
+    }
+
+    public boolean isStudent() {
+        return this.userRoles.contains(UserRoles.ROLE_STUDENT);
+    }
     
     public Long getId() {
         return this.id;

@@ -8,5 +8,6 @@ import java.util.List;
 public interface PhotoResultRepository extends JpaRepository<PhotoResult, Long> {
 
     List<PhotoResult> findByTutorialId(Long tutorialId);
+    PhotoResult findByTutorialIdAndUserId(Long tutorialId, Long userId);
 
 }

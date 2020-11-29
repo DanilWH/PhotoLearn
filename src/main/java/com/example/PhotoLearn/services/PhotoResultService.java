@@ -67,4 +67,12 @@ public class PhotoResultService {
         return filename;
     }
 
+    public PhotoResultDto mapFromEntityToDto(PhotoResult photoResult) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        PhotoResultDto photoResultDto = modelMapper.map(photoResult, PhotoResultDto.class);
+
+        return photoResultDto;
+    }
+
 }
