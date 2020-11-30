@@ -1,5 +1,8 @@
 package com.example.PhotoLearn.models;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,9 +18,13 @@ public class PhotoResult {
     private String filename;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "tutorial_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Tutorial tutorial;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
     public Long getId() {
