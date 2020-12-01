@@ -46,7 +46,24 @@ public class PhotoResultService {
         return this.photoResultRepository.save(photoResult);
     }
 
-    public String uploadPhoto(MultipartFile multipartFile) throws IOException {
+    public void deletePhotoResult(Long photoResultId) {
+        // find the 'PhotoResult' in the database.
+        PhotoResult photoResult = this.photoResultRepository.findById(photoResultId).orElseThrow(() -> new NoResultException());
+        // remove the image from the server.
+        this.deletePhoto(photoResult.getFilename());
+        // remove the record from the database.
+        this.photoResultRepository.delete(photoResult);
+    }
+
+    public PhotoResultDto mapFromEntityToDto(PhotoResult photoResult) {
+        ModelMapper modelMapper = new ModelMapper();
+
+        PhotoResultDto photoResultDto = modelMapper.map(photoResult, PhotoResultDto.class);
+
+        return photoResultDto;
+    }
+
+    private String uploadPhoto(MultipartFile multipartFile) throws IOException {
         // check if there's an image.
         if (multipartFile != null && multipartFile.isEmpty()) return null;
 
@@ -67,12 +84,11 @@ public class PhotoResultService {
         return filename;
     }
 
-    public PhotoResultDto mapFromEntityToDto(PhotoResult photoResult) {
-        ModelMapper modelMapper = new ModelMapper();
-
-        PhotoResultDto photoResultDto = modelMapper.map(photoResult, PhotoResultDto.class);
-
-        return photoResultDto;
+    private void deletePhoto(String filename) {
+        if (filename != null && !filename.isEmpty()) {
+            File file = new File(uploadPath + filename);
+            file.delete();
+        }
     }
 
 }

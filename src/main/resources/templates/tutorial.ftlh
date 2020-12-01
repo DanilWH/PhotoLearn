@@ -35,6 +35,10 @@
 			<!-- Show the description and the photo if the student has already uploaded a photo result -->
 			<p>${photoResultDto.description}</p>
 			<img src="/img/${photoResultDto.filename}" />
+
+			<!-- Later, make an implementation of like a popping up widow (using bootstrap) that will ask
+				if the user really wants to delete the 'PhotoResult'. -->
+			<div><a href="/tutorial/${tutorialDto.id}/photo-result/${photoResultDto.id}/delete">Удалить ответ.</a></div>
 		<#else>
 			<!-- Create a new form if the student hasn't uploaded a photo result. -->
 			<form action="/tutorial/${tutorialDto.id}/photo-result/add" method="post" enctype="multipart/form-data">

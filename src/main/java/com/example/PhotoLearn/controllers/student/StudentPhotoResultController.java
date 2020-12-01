@@ -1,6 +1,7 @@
 package com.example.PhotoLearn.controllers.student;
 
 import com.example.PhotoLearn.dto.PhotoResultDto;
+import com.example.PhotoLearn.models.PhotoResult;
 import com.example.PhotoLearn.models.Tutorial;
 import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.repositories.TutorialRepository;
@@ -12,10 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -58,6 +56,17 @@ public class StudentPhotoResultController {
         photoResultDto.setTutorial(this.tutorialService.getById(tutorialId));
         // store the PhotoResult in the database.
         this.photoResultService.savePhotoResult(photoResultDto, multipartFile);
+
+        return "redirect:/tutorial/" + tutorialId;
+    }
+
+    @GetMapping("/{tutorialId}/photo-result/{photoResultId}/delete")
+    public String deletePhotoResult(
+            @PathVariable Long tutorialId,
+            @PathVariable Long photoResultId,
+            Model model
+    ) {
+        this.photoResultService.deletePhotoResult(photoResultId);
 
         return "redirect:/tutorial/" + tutorialId;
     }
