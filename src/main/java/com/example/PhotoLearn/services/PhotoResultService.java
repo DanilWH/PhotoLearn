@@ -65,6 +65,7 @@ public class PhotoResultService {
 
     private String uploadPhoto(MultipartFile multipartFile) throws IOException {
         // check if there's an image.
+        // TODO.
         if (multipartFile != null && multipartFile.isEmpty()) return null;
 
         // create a random UUID.

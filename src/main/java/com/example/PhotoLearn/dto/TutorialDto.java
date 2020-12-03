@@ -18,7 +18,7 @@ public class TutorialDto {
     private String content;
     private Instant createdOn;
     private Instant updatedOn;
-    private boolean imgEditorIsInjected;
+    private String imgName;
     private User user;
 
     public String getFormattedCreatedOn(Instant instantDate) {
@@ -43,8 +43,8 @@ public class TutorialDto {
     public Instant getUpdatedOn() {
         return updatedOn;
     }
-    public boolean isImgEditorIsInjected() {
-        return imgEditorIsInjected;
+    public String getImgName() {
+        return imgName;
     }
     public User getUser() {
         return user;
@@ -64,8 +64,8 @@ public class TutorialDto {
     public void setUpdatedOn(Instant updatedOn) {
         this.updatedOn = updatedOn;
     }
-    public void setImgEditorIsInjected(boolean imgEditorIsInjected) {
-        this.imgEditorIsInjected = imgEditorIsInjected;
+    public void setImgName(String imgName) {
+        this.imgName = imgName;
     }
     public void setUser(User user) {
         this.user = user;

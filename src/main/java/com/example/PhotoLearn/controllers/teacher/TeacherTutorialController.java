@@ -11,13 +11,13 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.services.TutorialService;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @Controller
 @PreAuthorize("hasRole('TEACHER')")
@@ -40,15 +40,16 @@ public class TeacherTutorialController {
     public String addTutorial(
             @Valid TutorialDto tutorialDto,
             BindingResult bindingResult,
+            @RequestParam MultipartFile multipartFile,
             Model model
-    ) {
+    ) throws IOException {
         // the fields validation.
         if (bindingResult.hasErrors()) {
             model.addAttribute(tutorialDto);
             return "new_tutorial";
         }
 
-        tutorialService.createNewTutorial(tutorialDto);
+        tutorialService.createNewTutorial(tutorialDto, multipartFile);
 
         return "redirect:/";
     }

@@ -2,7 +2,7 @@
 
     <h1>${header}</h1>
 
-    <form action="${action}" method="post">
+    <form action="${action}" method="post" enctype="multipart/form-data">
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
         <div>
             <label for="title">Заголовок: </label>
@@ -15,9 +15,8 @@
             <@spring.showErrors "<br>" />
         </div>
         <div>
-            <label for="imgEditorIsInjected">Добавить встроенный редактор изображения?</label>
-            <input id="imgEditorIsInjected" type="checkbox"
-                   name="imgEditorIsInjected" value="true" ${imgEditorIsInjectedValue?string("checked", "")} />
+            <label for="multipartFile">Добавить фотографию для редактирования?</label>
+            <input id="multipartFile" name="multipartFile" type="file" />
         </div>
         <div>
             <button type="submit">Добавить</button>

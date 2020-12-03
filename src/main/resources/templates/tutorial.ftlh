@@ -6,7 +6,7 @@
 <@base.content title="${tutorialDto.title} | Photo Learn">
 
 	<!-- The 'toast' image editor css files. -->
-	<#if tutorialDto.imgEditorIsInjected>
+	<#if tutorialDto.imgName??>
 		<#include "parts/toast_image_editor/css_data.ftlh" />
 	</#if>
 
@@ -84,7 +84,8 @@
 	
 	
 	<!-- The 'toast' editor js files. -->
-	<#if tutorialDto.imgEditorIsInjected>
+	<#if tutorialDto.imgName??>
+		<img src="/img/${tutorialDto.imgName}" />
 		<div id="tui-image-editor-container"></div>
 		
         <#include "parts/toast_image_editor/js_scripts.ftlh" />
