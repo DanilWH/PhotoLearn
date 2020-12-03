@@ -1,5 +1,6 @@
 <#import "parts/base.ftlh" as base />
 <#import "spring.ftl" as spring />
+<#import "parts/toast_image_editor/js_scripts.ftlh" as js_scripts />
 <#include "parts/user_security.ftlh" />
 <#assign  security=JspTaglibs["http://www.springframework.org/security/tags"] />
 
@@ -85,10 +86,9 @@
 	
 	<!-- The 'toast' editor js files. -->
 	<#if tutorialDto.imgName??>
-		<img src="/img/${tutorialDto.imgName}" />
 		<div id="tui-image-editor-container"></div>
 		
-        <#include "parts/toast_image_editor/js_scripts.ftlh" />
+        <@js_scripts.toastInit imgName="${tutorialDto.imgName}" />
 	</#if>
 
 </@base.content>
