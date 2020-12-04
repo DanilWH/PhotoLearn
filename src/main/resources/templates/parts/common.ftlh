@@ -1,4 +1,4 @@
-<#macro tutorial_editor header action tutorialDto titleValue="" contentValue="" imgEditorIsInjectedValue=false>
+<#macro tutorial_editor header action tutorialDto titleValue="" contentValue="">
 
     <h1>${header}</h1>
 
@@ -15,7 +15,7 @@
             <@spring.showErrors "<br>" />
         </div>
         <div>
-            <label for="multipartFile">Добавить фотографию для редактирования?</label>
+            <label for="multipartFile">Выберете фотографию для редактирования: </label>
             <input id="multipartFile" name="multipartFile" type="file" />
         </div>
         <div>

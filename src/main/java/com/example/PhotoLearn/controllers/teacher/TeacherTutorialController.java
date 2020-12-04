@@ -71,8 +71,9 @@ public class TeacherTutorialController {
             @PathVariable Long tutorialId,
             @Valid TutorialDto tutorialDto,
             BindingResult bindingResult,
+            @RequestParam MultipartFile multipartFile,
             Model model
-    ) {
+    ) throws IOException {
         // the fields validation.
         if (bindingResult.hasErrors()) {
             model.addAttribute(tutorialDto);
@@ -80,7 +81,7 @@ public class TeacherTutorialController {
         }
         Tutorial tutorial = this.tutorialService.getById(tutorialId);
 
-        this.tutorialService.updateExistingTutorial(tutorialDto, tutorial);
+        this.tutorialService.updateExistingTutorial(tutorialDto, tutorial, multipartFile);
 
         return "redirect:/tutorial/" + tutorialId;
     }
@@ -100,6 +101,7 @@ public class TeacherTutorialController {
     public String deleteTutorial(
             @PathVariable Long tutorialId
     ) {
+        // TODO a separate method in the service.
         Tutorial tutorial = this.tutorialService.getById(tutorialId);
         this.tutorialRepository.delete(tutorial);
 

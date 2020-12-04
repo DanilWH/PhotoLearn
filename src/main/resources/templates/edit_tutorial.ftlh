@@ -11,7 +11,6 @@
         tutorialDto=tutorialDto
         titleValue="${tutorialDto.title}"
         contentValue="${tutorialDto.content}"
-        imgEditorIsInjectedValue=tutorialDto.imgEditorIsInjected
     />
 
 </@base.content>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.UUID;
 
+import com.sun.xml.bind.v2.TODO;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -40,7 +41,7 @@ public class TutorialService {
         tutorial.setCreatedOn(createdOn);
         tutorial.setUpdatedOn(createdOn);
 
-        tutorial.setImgName(this.uploadImage(file));
+        tutorial.setImgName(this.uploadImage(tutorial, file));
 
         // set the user that created the tutorial.
         User user = this.userService.getCurrentUser().orElseThrow(
@@ -50,11 +51,19 @@ public class TutorialService {
         this.tutorialRepository.save(tutorial);
     }
 
-    public void updateExistingTutorial(TutorialDto tutorialDto, Tutorial tutorial) {
+    public void updateExistingTutorial(
+            TutorialDto tutorialDto,
+            Tutorial tutorial,
+            MultipartFile file
+    ) throws IOException {
         // set new values to the fields that might be changed.
         tutorial.setTitle(tutorialDto.getTitle());
         tutorial.setContent(tutorialDto.getContent());
-        // tutorial.setImgEditorIsInjected(tutorialDto.isImgEditorIsInjected()); TODO
+        // check if the multipartFile has a file and delete the old file if there was one.
+        if (file != null && !file.isEmpty()) {
+            this.deleteImage(tutorial.getImgName());
+        }
+        tutorial.setImgName(this.uploadImage(tutorial, file)); // TODO
         tutorial.setUpdatedOn(Instant.now());
 
         // update the tutorial in the database.
@@ -77,7 +86,7 @@ public class TutorialService {
         return this.tutorialRepository.findById(tutorialId).orElseThrow(() -> new NoResultException());
     }
 
-    private String uploadImage(MultipartFile file) throws IOException {
+    private String uploadImage(Tutorial tutorial, MultipartFile file) throws IOException {
         if (file != null && !file.isEmpty()) {
             // create a new UUID for the file.
             String fileUUID = UUID.randomUUID().toString();
@@ -94,10 +103,17 @@ public class TutorialService {
 
             // return the image filename as a result.
             return imageFilename;
+        } else {
+            // return the primary value of the imgName if the multipart file is empty or null.
+            return tutorial.getImgName();
         }
+    }
 
-        // return null if there were problems with getting the multipart file.
-        return null;
+    private void deleteImage(String filename) {
+        if (filename != null && !filename.isEmpty()) {
+            File fileObject = new File(this.uploadPath + filename);
+            fileObject.delete();
+        };
     }
 
 }
