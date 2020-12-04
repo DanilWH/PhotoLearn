@@ -101,9 +101,7 @@ public class TeacherTutorialController {
     public String deleteTutorial(
             @PathVariable Long tutorialId
     ) {
-        // TODO a separate method in the service.
-        Tutorial tutorial = this.tutorialService.getById(tutorialId);
-        this.tutorialRepository.delete(tutorial);
+        this.tutorialService.deleteExistingTutorial(tutorialId);
 
         return "redirect:/";
     }

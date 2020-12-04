@@ -63,12 +63,21 @@ public class TutorialService {
         if (file != null && !file.isEmpty()) {
             this.deleteImage(tutorial.getImgName());
         }
-        tutorial.setImgName(this.uploadImage(tutorial, file)); // TODO
+        tutorial.setImgName(this.uploadImage(tutorial, file));
         tutorial.setUpdatedOn(Instant.now());
 
         // update the tutorial in the database.
         this.tutorialRepository.save(tutorial);
 
+    }
+
+    public void deleteExistingTutorial(Long tutorialId) {
+        Tutorial tutorial = this.getById(tutorialId);
+
+        // remove the tutorial image from the server before deleting the tutorial from the database.
+        this.deleteImage(tutorial.getImgName());
+
+        this.tutorialRepository.delete(tutorial);
     }
 
     public TutorialDto getDtoById(Long tutorialId) {
