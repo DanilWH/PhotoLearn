@@ -15,6 +15,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
+import com.example.PhotoLearn.validation.ValidPassword;
+import com.example.PhotoLearn.validation.ValidUsername;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -25,8 +27,10 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
+    @ValidUsername
     private String username;
+    @ValidPassword
     private String password;
     private boolean active;
     

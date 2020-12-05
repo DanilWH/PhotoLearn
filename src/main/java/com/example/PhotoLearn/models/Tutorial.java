@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 @Entity
 @Table(name = "tutorials")
@@ -19,13 +20,19 @@ public class Tutorial {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @NotBlank(message = "Это поле должно быть заполнено")
     private String title;
+
     @Lob
     @Type(type = "text")
+    @NotBlank(message = "Это поле должно быть заполнено")
     private String content;
+
     private Instant createdOn;
     private Instant updatedOn;
     private String imgName;
+
     @ManyToOne
     private User user;
 

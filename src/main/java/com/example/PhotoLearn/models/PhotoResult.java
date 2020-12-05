@@ -4,6 +4,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "photo_results")
@@ -13,6 +14,7 @@ public class PhotoResult {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Size(max = 200, message = "Описание не должно быть длиной больше чем 200 символов.")
     private String description;
 
     private String filename;
