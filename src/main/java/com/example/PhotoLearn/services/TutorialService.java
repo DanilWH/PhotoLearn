@@ -83,8 +83,8 @@ public class TutorialService {
     }
 
     public List<TutorialDto> getAllDto() {
-        List<TutorialDto> tutorialsDto = this.tutorialRepository.findAll().stream().map(entity ->
-                new ModelMapper().map(entity, TutorialDto.class)
+        List<TutorialDto> tutorialsDto = this.tutorialRepository.findAllByOrderByCreatedOnDesc()
+                .stream().map(entity -> new ModelMapper().map(entity, TutorialDto.class)
         ).collect(Collectors.toList());
 
         return tutorialsDto;

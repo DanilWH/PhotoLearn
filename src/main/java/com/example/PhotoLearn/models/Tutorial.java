@@ -1,5 +1,7 @@
 package com.example.PhotoLearn.models;
 
+import org.hibernate.annotations.Type;
+
 import java.time.Instant;
 
 import javax.persistence.Entity;
@@ -19,6 +21,7 @@ public class Tutorial {
     private Long id;
     private String title;
     @Lob
+    @Type(type = "text")
     private String content;
     private Instant createdOn;
     private Instant updatedOn;
