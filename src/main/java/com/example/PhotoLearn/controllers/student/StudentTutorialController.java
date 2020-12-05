@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.models.Tutorial;
 import com.example.PhotoLearn.repositories.TutorialRepository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @PreAuthorize("hasRole('STUDENT')")
@@ -48,10 +49,23 @@ public class StudentTutorialController {
     }
     
     @GetMapping("/tutorials")
-    public String showTutorials(Model model) {
+    public String showTutorials(
+            @RequestParam(value = "tutorialSearchBar", required = false) String tutorialSearchBar,
+            Model model
+    ) {
         List<TutorialDto> tutorialsDto = this.tutorialRepository.findAll().stream().map(entity ->
             new ModelMapper().map(entity, TutorialDto.class)
         ).collect(Collectors.toList());
+
+        if (!tutorialSearchBar.trim().isEmpty()) {
+            List<TutorialDto> requiredTutorials = new ArrayList<>();
+
+            for (TutorialDto tutorialDto : tutorialsDto)
+                if (tutorialDto.getTitle().contains(tutorialSearchBar))
+                    requiredTutorials.add(tutorialDto);
+
+            tutorialsDto = requiredTutorials;
+        }
 
         model.addAttribute("tutorials", tutorialsDto);
         

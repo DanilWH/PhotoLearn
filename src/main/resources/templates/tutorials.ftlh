@@ -3,6 +3,12 @@
 <@base.content title="Уроки | Photo Learn">
 
 	<h1>Уроки</h1>
+
+	<form action="#" method="get">
+		<label for="tutorialSearchBar">Найти урок: </label>
+		<input id="tutorialSearchBar" type="text" name="tutorialSearchBar" placeholder="Найти урок"/>
+		<button type="submit">Найти</button>
+	</form>
 	
 	<ul>
 		<#list tutorials as tutorial>
