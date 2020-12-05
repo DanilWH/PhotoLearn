@@ -4,10 +4,14 @@
 
 	<h1>Уроки</h1>
 
-	<form action="#" method="get">
-		<label for="tutorialSearchBar">Найти урок: </label>
-		<input id="tutorialSearchBar" type="text" name="tutorialSearchBar" placeholder="Найти урок"/>
+	<form action="?" method="get">
+		<label for="tutorial-search">Найти урок: </label>
+		<input id="tutorial-search" type="text" name="tutorial-search"
+			   value="${tutorialsSearchValue}" placeholder="Найти урок"/>
 		<button type="submit">Найти</button>
+		<#if foundTutorialsNumber??>
+			<small>${foundTutorialsNumber} results <a href="?">(${totalTutorialsNumber} total)</a></small>
+		</#if>
 	</form>
 	
 	<ul>

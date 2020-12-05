@@ -3,7 +3,9 @@ package com.example.PhotoLearn.services;
 import java.io.File;
 import java.io.IOException;
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import com.sun.xml.bind.v2.TODO;
 import org.modelmapper.ModelMapper;
@@ -78,6 +80,14 @@ public class TutorialService {
         this.deleteImage(tutorial.getImgName());
 
         this.tutorialRepository.delete(tutorial);
+    }
+
+    public List<TutorialDto> getAllDto() {
+        List<TutorialDto> tutorialsDto = this.tutorialRepository.findAll().stream().map(entity ->
+                new ModelMapper().map(entity, TutorialDto.class)
+        ).collect(Collectors.toList());
+
+        return tutorialsDto;
     }
 
     public TutorialDto getDtoById(Long tutorialId) {

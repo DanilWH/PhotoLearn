@@ -9,5 +9,6 @@ import com.example.PhotoLearn.models.Tutorial;
 public interface TutorialRepository extends JpaRepository<Tutorial, Long> {
     
     List<Tutorial> findAll();
+    List<Tutorial> findByTitleContaining(String title);
     
 }

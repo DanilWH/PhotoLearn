@@ -50,24 +50,39 @@ public class StudentTutorialController {
     
     @GetMapping("/tutorials")
     public String showTutorials(
-            @RequestParam(value = "tutorialSearchBar", required = false) String tutorialSearchBar,
+            @RequestParam(name = "tutorial-search",
+                    defaultValue = "", required = false) String tutorialSearch,
             Model model
     ) {
-        List<TutorialDto> tutorialsDto = this.tutorialRepository.findAll().stream().map(entity ->
-            new ModelMapper().map(entity, TutorialDto.class)
-        ).collect(Collectors.toList());
+        // get all the tutorials that are in the database.
+        List<TutorialDto> tutorialsDto = this.tutorialService.getAllDto();
 
-        if (!tutorialSearchBar.trim().isEmpty()) {
-            List<TutorialDto> requiredTutorials = new ArrayList<>();
+        // check if the filter isn't empty
+        if (tutorialSearch != null && !tutorialSearch.trim().isEmpty()) {
+            // make the filter to the lower case.
+            tutorialSearch = tutorialSearch.toLowerCase();
+            // initialize an empty ArrayList for the tutorials that will be found.
+            List<TutorialDto> foundTutorials = new ArrayList<>();
 
+            // look for the tutorials whose titles match the filter.
             for (TutorialDto tutorialDto : tutorialsDto)
-                if (tutorialDto.getTitle().contains(tutorialSearchBar))
-                    requiredTutorials.add(tutorialDto);
+                if (tutorialDto.getTitle().toLowerCase().contains(tutorialSearch))
+                    foundTutorials.add(tutorialDto);
 
-            tutorialsDto = requiredTutorials;
+            // add the total number of tutorials that were found
+            // and the number of tutorials that were found by the filter.
+            model.addAttribute("totalTutorialsNumber", tutorialsDto.size());
+            model.addAttribute("foundTutorialsNumber", foundTutorials.size());
+
+            // reuse the old variable for the list of the found tutorial.
+            tutorialsDto = foundTutorials;
         }
 
+        // add all the tutorials that have been found so far to the view.
         model.addAttribute("tutorials", tutorialsDto);
+        // we also add the search bar value in order to display it
+        // in the case if the user used the search bar.
+        model.addAttribute("tutorialsSearchValue", tutorialSearch);
         
         return "tutorials";
     }
