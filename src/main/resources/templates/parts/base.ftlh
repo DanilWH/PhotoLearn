@@ -16,7 +16,10 @@
 				<a href="/tutorial/new">Создать новый урок.</a> -
 			</@security.authorize>
     		
-    		Здравствуйте, ${_user.username}!
+    		Здравствуйте, ${_user.username}! -
+			<@security.authorize access="hasRole('ROLE_ADMIN')">
+				<a href="/admin/users">Пользователи</a>
+			</@security.authorize>
     		<form action="/logout" method="post">
     			<input type="hidden" name="_csrf" value="${_csrf.token}" />
     			<button type="submit">Выйти</button>

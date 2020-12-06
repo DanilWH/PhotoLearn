@@ -1,17 +1,17 @@
 package com.example.PhotoLearn.dto;
 
-import java.util.Set;
-
-import javax.validation.constraints.NotBlank;
-
 import com.example.PhotoLearn.models.UserRoles;
 import com.example.PhotoLearn.validation.PasswordMatches;
 import com.example.PhotoLearn.validation.ValidPassword;
 import com.example.PhotoLearn.validation.ValidUsername;
 
+import javax.validation.constraints.NotBlank;
+import java.util.Set;
+
 @PasswordMatches
 public class UserDto {
-    
+
+    private Long id;
     @NotBlank(message = "Имя пользователя не должно быть пустым.")
     @ValidUsername
     private String username;
@@ -19,6 +19,10 @@ public class UserDto {
     private String password;
     private String confirmPassword;
     private Set<UserRoles> userRoles;
+
+    public Long getId() {
+        return this.id;
+    }
 
     public String getUsername() {
         return this.username;
@@ -34,6 +38,10 @@ public class UserDto {
     
     public Set<UserRoles> getUserRoles() {
         return this.userRoles;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public void setUsername(String username) {

@@ -19,7 +19,7 @@
             <input id="multipartFile" name="multipartFile" type="file" />
         </div>
         <div>
-            <button type="submit">Добавить</button>
+            <button type="submit">Сохранить</button>
         </div>
     </form>
 
