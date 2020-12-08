@@ -65,24 +65,27 @@ public class PhotoResultService {
 
     private String uploadPhoto(MultipartFile multipartFile) throws IOException {
         // check if there's an image.
-        // TODO.
-        if (multipartFile != null && multipartFile.isEmpty()) return null;
+        if (multipartFile != null && !multipartFile.isEmpty()) {
 
-        // create a random UUID.
-        String fileUUID = UUID.randomUUID().toString();
-        // assign the UUID to the filename;
-        String filename = fileUUID + "." + multipartFile.getOriginalFilename();
+            // create a random UUID.
+            String fileUUID = UUID.randomUUID().toString();
+            // assign the UUID to the filename;
+            String filename = fileUUID + "." + multipartFile.getOriginalFilename();
 
-        // make the directories if they don't exist.
-        File directory = new File(this.uploadPath);
-        if (!directory.exists())
-            directory.mkdirs();
+            // make the directories if they don't exist.
+            File directory = new File(this.uploadPath);
+            if (!directory.exists())
+                directory.mkdirs();
 
-        // save the image (file) in the server directory.
-        multipartFile.transferTo(new File(this.uploadPath + filename));
+            // save the image (file) in the server directory.
+            multipartFile.transferTo(new File(this.uploadPath + filename));
 
-        // return the file name as a result.
-        return filename;
+            // return the file name as a result.
+            return filename;
+        }
+
+        // return null if there were no image in multipart file.
+        return null;
     }
 
     private void deletePhoto(String filename) {
