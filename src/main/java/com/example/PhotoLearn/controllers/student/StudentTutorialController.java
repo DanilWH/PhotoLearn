@@ -1,34 +1,27 @@
 package com.example.PhotoLearn.controllers.student;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.persistence.NoResultException;
-
 import com.example.PhotoLearn.dto.PhotoResultDto;
+import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.models.PhotoResult;
 import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.models.UserRoles;
 import com.example.PhotoLearn.repositories.PhotoResultRepository;
+import com.example.PhotoLearn.repositories.TutorialRepository;
 import com.example.PhotoLearn.services.PhotoResultService;
 import com.example.PhotoLearn.services.TutorialService;
 import com.example.PhotoLearn.services.UserService;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import com.example.PhotoLearn.dto.TutorialDto;
-import com.example.PhotoLearn.models.Tutorial;
-import com.example.PhotoLearn.repositories.TutorialRepository;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Controller
-@PreAuthorize("hasRole('STUDENT')")
 public class StudentTutorialController {
 
     @Autowired
@@ -90,6 +83,7 @@ public class StudentTutorialController {
     @GetMapping("/tutorial/{tutorialId}")
     public String showSingleTutorial(
             @PathVariable Long tutorialId,
+            @AuthenticationPrincipal User currentUser,
             Model model
     ) {
         TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId);
@@ -97,9 +91,7 @@ public class StudentTutorialController {
         // put the tutorial DTO into the model.
         model.addAttribute(tutorialDto);
 
-        User currentUser = this.userService.getCurrentUserOrElseThrow();
-
-        if (currentUser.getUserRoles().contains(UserRoles.ROLE_STUDENT)) {
+        if (currentUser != null && currentUser.getUserRoles().contains(UserRoles.ROLE_STUDENT)) {
             // find the "photo result" by its tutorial id and user id.
             PhotoResult photoResult = this.photoResultRepository.findByTutorialIdAndUserId(tutorialId, currentUser.getId());
             // find out whether we need to put the DTO of the photo result
