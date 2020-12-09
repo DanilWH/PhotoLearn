@@ -29,6 +29,9 @@ public class PhotoResult {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
 
+    // TODO check if all the images of photo-results are removed from the server when deleting a tutorial.
+    // TODO if not, create a method annotated with @PreRemove that removes all the images of photo results from the server.
+
     public Long getId() {
         return id;
     }
