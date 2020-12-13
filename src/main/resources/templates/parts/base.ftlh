@@ -1,9 +1,6 @@
 <#macro content title>
 
-<#import "toast_image_editor/js_scripts.ftlh" as js_scripts />
-
 <#include "user_security.ftlh" />
-
 <#assign  security=JspTaglibs["http://www.springframework.org/security/tags"] />
 
 <!DOCTYPE html>
@@ -84,18 +81,11 @@
 			</div>
 		</nav>
 
-		<div class="container my-5">
+		<div class="container my-5" style="width: 100%; height: 90%;">
 			<#nested />
 		</div>
 
 		<!-- JavaScript files.-->
-
-		<!-- "TOAST UI Image Editor" JS. -->
-		<#if (tutorialDto.imgName)??>
-			<div id="tui-image-editor-container"></div>
-
-			<@js_scripts.toastInit imgName="${tutorialDto.imgName}" />
-		</#if>
 
 		<!-- jQuery, Popper.js, and Bootstrap JS -->
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
