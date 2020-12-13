@@ -62,11 +62,6 @@ public class StudentTutorialController {
                 if (tutorialDto.getTitle().toLowerCase().contains(tutorialSearch))
                     foundTutorials.add(tutorialDto);
 
-            // add the total number of tutorials that were found
-            // and the number of tutorials that were found by the filter.
-            model.addAttribute("totalTutorialsNumber", tutorialsDto.size());
-            model.addAttribute("foundTutorialsNumber", foundTutorials.size());
-
             // reuse the old variable for the list of the found tutorial.
             tutorialsDto = foundTutorials;
         }

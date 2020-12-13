@@ -1,6 +1,9 @@
 <#macro content title>
 
+<#import "toast_image_editor/js_scripts.ftlh" as js_scripts />
+
 <#include "user_security.ftlh" />
+
 <#assign  security=JspTaglibs["http://www.springframework.org/security/tags"] />
 
 <!DOCTYPE html>
@@ -32,9 +35,6 @@
 							<input class="form-control mr-sm-2" type="search" name="tutorial-search"
 								   value="${tutorialsSearchValue?ifExists}" placeholder="Найти урок" aria-label="Search"/>
 							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Найти</button>
-							<#if foundTutorialsNumber??>
-								<small>${foundTutorialsNumber} results <a href="?">(${totalTutorialsNumber} total)</a></small>
-							</#if>
 						</form>
 					</li>
 				</ul>
@@ -88,7 +88,16 @@
 			<#nested />
 		</div>
 
-		<!-- Option 2: jQuery, Popper.js, and Bootstrap JS -->
+		<!-- JavaScript files.-->
+
+		<!-- "TOAST UI Image Editor" JS. -->
+		<#if (tutorialDto.imgName)??>
+			<div id="tui-image-editor-container"></div>
+
+			<@js_scripts.toastInit imgName="${tutorialDto.imgName}" />
+		</#if>
+
+		<!-- jQuery, Popper.js, and Bootstrap JS -->
 		<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.min.js" integrity="sha384-w1Q4orYjBQndcko6MimVbzY0tgp4pWB4lZ7lr30WKz0vr/aWKhXdBNmNb5D92v7s" crossorigin="anonymous"></script>

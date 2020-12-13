@@ -16,6 +16,8 @@
 					<i>${tutorial.user.getUsername()}</i>
 				</div>
 			</li>
+		<#else>
+			<b>Ничего не найдено.</b>
 		</#list>
 	</ul>
 
