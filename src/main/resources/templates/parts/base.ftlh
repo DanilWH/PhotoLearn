@@ -39,7 +39,7 @@
 					<#if _user??>
 						<!-- Greeting. -->
 						<li class="nav-item">
-							<a class="nav-link">Здравствуйте, ${_user.username}!</a>
+							<a class="nav-link mr-1">Здравствуйте, ${_user.username}!</a>
 						</li>
 
 						<!-- The admin operations dropdown list. -->
