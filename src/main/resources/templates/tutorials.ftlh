@@ -3,22 +3,25 @@
 <@base.content title="Уроки | Photo Learn">
 
 	<@base.header>Уроки</@base.header>
-	
-	<ul>
+
+	<div class="card-columns">
 		<#list tutorials as tutorial>
-			<li><div>
-					<h2><a href="/tutorial/${tutorial.id}">${tutorial.title}</a></h2>
+			<div class="card">
+				<#if tutorial.imgName??>
+					<img src="/img/${tutorial.imgName}" class="card-img-top" alt="${tutorial.imgName}">
+				</#if>
+				<div class="card-body">
+					<h5 class="card-title">${tutorial.title}</h5>
+					<p class="card-text">
+						<div><small class="text-muted">Создан: ${tutorial.getFormattedCreatedOn(tutorial.createdOn)}</small></div>
+						<div><small class="text-muted">Обнавлён: ${tutorial.getFormattedCreatedOn(tutorial.updatedOn)}</small></div>
+					</p>
+					<a href="/tutorial/${tutorial.id}" class="btn btn-info">Читать</a>
 				</div>
-				<hr />
-				<div align="right">
-					Created: <i>${tutorial.getFormattedCreatedOn(tutorial.createdOn)}</i> -
-					Updated: <i>${tutorial.getFormattedCreatedOn(tutorial.updatedOn)}</i> -
-					<i>${tutorial.user.getUsername()}</i>
-				</div>
-			</li>
+			</div>
 		<#else>
-			<b>Ничего не найдено.</b>
+			<h3><b>Ничего не найдено.</b></h3>
 		</#list>
-	</ul>
+	</div>
 
 </@base.content>
