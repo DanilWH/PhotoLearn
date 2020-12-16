@@ -10,7 +10,7 @@
 	<#if tutorialDto.imgName??>
 		<#include "parts/toast_image_editor/css_data.ftlh" />
 	</#if>
-	
+
 	<!-- The content of the page. -->
 	<@base.header>
 		<div class="d-flex justify-content-between">
@@ -104,8 +104,11 @@
 					<!-- The description form. -->
 					<div class="form-group">
 						<label for="description">Описание</label>
-						<@spring.formTextarea "photoResultDto.description" "class='form-control'"/>
-						<@spring.showErrors "<br>" />
+						<@spring.bind "photoResultDto.description" />
+						<@spring.formTextarea "photoResultDto.description" "class='form-control ${(spring.status.error)?string(\"is-invalid\", \"\")}' aria-describedby='descriptionValidation'" />
+						<div id="descriptionValidation" class="invalid-feedback">
+							<@spring.showErrors "<br>" />
+						</div>
 					</div>
 
 					<!-- The "File uploading" form. -->

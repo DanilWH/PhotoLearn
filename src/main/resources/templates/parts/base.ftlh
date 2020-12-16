@@ -12,6 +12,7 @@
 
 		<!-- Bootstrap CSS -->
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+		<#include "toast_image_editor/css_data.ftlh" />
 
 		<title>${title}</title>
     </head>
@@ -31,7 +32,13 @@
 						<form action="/tutorials" method="get" class="form-inline">
 							<input class="form-control mr-sm-2" type="search" name="tutorial-search"
 								   value="${tutorialsSearchValue?ifExists}" placeholder="Найти урок" aria-label="Search"/>
-							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Найти</button>
+							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+									<path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+									<path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+								</svg>
+								Найти
+							</button>
 						</form>
 					</li>
 				</ul>
