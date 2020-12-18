@@ -2,11 +2,20 @@
 
 <@base.content title="Вход | Photo Learn">
 
-        <form action="/login" method="post">
-        	<input type="hidden" name="_csrf" value="${_csrf.token}" />
-            <div><label> Имя пользователя : <input type="text" name="username" required/> </label></div>
-            <div><label> Пароль: <input type="password" name="password" required/> </label></div>
-            <div><button type="submit">Войти</button></div>
-        </form>
+    <@base.header>Вход</@base.header>
+
+    <form action="/login" method="post">
+        <input type="hidden" name="_csrf" value="${_csrf.token}" />
+
+        <div class="form-group">
+            <label for="username_id">Имя пользователя</label>
+            <input id="username_id" type="text" class="form-control" name="username" required/>
+        </div>
+        <div class="form-group">
+            <label for="password_id">Пароль</label>
+            <input id="password_id" type="password" class="form-control" name="password" required/>
+        </div>
+        <button type="submit" class="btn btn-info">Войти</button>
+    </form>
         
 </@base.content>
