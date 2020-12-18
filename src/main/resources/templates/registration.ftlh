@@ -3,53 +3,63 @@
 
 <@base.content title="Регистрация | Photo Learn">
 
-	<h2>Регистрация</h2>
-	
+	<@base.header>Регистрация</@base.header>
+
 	<form action="/registration" method="post">
 		<input type="hidden" name="_csrf" value="${_csrf.token}"/>
-		<div>
+
+		<div class="form-group">
 			<label for="username">Имя пользователя: </label>
-			<@spring.formInput "userDto.username" />
-            <@spring.showErrors "<br>" />
+			<@spring.bind "userDto.username" />
+			<@spring.formInput "userDto.username" "class='form-control ${(spring.status.error)?string(\"is-invalid\", \"\")}' aria-describedby='usernameValidation'" />
+			<div id="usernameValidation" class="invalid-feedback">
+				<@spring.showErrors "<br>" />
+			</div>
+			<small class="form-text text-muted">
+				Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.
+			</small>
 		</div>
-		
-		<div>
+
+		<div class="form-group">
 			<label for="password">Пароль: </label>
-			<@spring.formPasswordInput "userDto.password" />
-			<ul>
-				<li>Пароль не может быть похож на имя пользователя.</li>
-				<li>Ваш пароль должен содержать не менее 8 символов.</li>
-				<li>Ваш пароль не может состоять только из букв алфавита.</li>
-				<li>Ваш пароль не может состоять только из цифр.</li>
-			</ul>
+			<@spring.bind "userDto.password" />
+			<@spring.formPasswordInput "userDto.password" "class='form-control ${(spring.status.error)?string(\"is-invalid\", \"\")}' aria-describedby='passwordHelp'" />
+			<small id="passwordHelp" class="form-text text-muted">
+				<ul>
+					<li>Пароль не может быть похож на имя пользователя.</li>
+					<li>Ваш пароль должен содержать не менее 8 символов.</li>
+					<li>Ваш пароль не может состоять только из букв алфавита.</li>
+					<li>Ваш пароль не может состоять только из цифр.</li>
+				</ul>
+			</small>
 		</div>
-		
-		<div>
+
+		<div class="form-group">
 			<label for="confirmPassword">Повторите пароль: </label>
-			<@spring.formPasswordInput "userDto.confirmPassword" />
-			
-			
-			
+			<@spring.bind "userDto.password" />
+			<@spring.formPasswordInput "userDto.confirmPassword" "class='form-control ${(spring.status.error)?string(\"is-invalid\", \"\")}' aria-describedby='passwordValidation'"/>
+
 			<!-- show errors if the password don't match. -->
 			<@spring.bind "userDto" />
-			<#if spring.status.error>
-				<ul><li><@spring.showErrors "<br>" /></li></ul>
-			<#else>
-				<!-- show error messages for the password. -->
-				<@spring.bind "userDto.password" />
+			<div id="passwordValidation" class="invalid-feedback">
 				<#if spring.status.error>
-				<ul>
-					<#assign errors = spring.status.errorMessages[0]?split(',') />
-					<#list errors as error>
-						<li>${error}</li>
-					</#list>
-				</ul>
+					<ul><li><@spring.showErrors "<br>" /></li></ul>
+				<#else>
+					<!-- show error messages for the password. -->
+					<@spring.bind "userDto.password" />
+					<#if spring.status.error>
+						<ul>
+							<#assign errors = spring.status.errorMessages[0]?split(',') />
+							<#list errors as error>
+								<b><li>${error}</li></b>
+							</#list>
+						</ul>
+					</#if>
 				</#if>
-			</#if>
+			</div>
 		</div>
-		<div><span id="error"></span></div>
-		<button id="submit_id" type="submit">Зарегистрироваться</button>
-		
+
+		<button id="submit_id" type="submit" class="btn btn-info">Зарегистрироваться</button>
 	</form>
 
 </@base.content>
