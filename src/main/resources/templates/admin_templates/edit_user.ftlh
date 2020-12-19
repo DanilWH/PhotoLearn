@@ -3,30 +3,48 @@
 
 <@base.content title="Изменения пользователя ${userDto.username} | Photo Learn">
 
-    <h1>Изменить пользователя.</h1>
+    <@base.header>Изменить пользователя.</@base.header>
 
     <form action="/admin/user/${userDto.id}/edit" method="post">
         <!-- hidden fields -->
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
 
-        <fieldset>
+        <!-- The user information. -->
+        <fieldset disabled>
             <legend>Информация пользователя</legend>
 
-            <div>ID пользователя: ${userDto.id}</div>
-            <div>Имя пользователя: ${userDto.username}</div>
+            <!-- The user ID. -->
+            <div class="form-group">
+                <label for="userId_id">ID пользователя</label>
+                <input id="userId_id" type="text" class="form-control" value="${userDto.id}" />
+            </div>
+
+            <!-- The user name. -->
+            <div class="form-group">
+                <label for="username_id">Имя пользователя</label>
+                <input id="username_id" type="text" class="form-control" value="${userDto.username}" />
+            </div>
         </fieldset>
+
+        <!-- The user roles. -->
         <fieldset>
             <legend>Изменить роли пользователя</legend>
 
             <#list roles as role>
-                <div>
-                    <label for="${role}">${role}: </label>
-                    <input id="${role}" type="radio" name="userRoles" value="${role}" ${(userDto.userRoles)?seq_contains(role)?string("checked", "")} />
+                <div class="form-check">
+                    <input id="${role}" type="radio" class="form-check-input" name="userRoles" value="${role}" ${(userDto.userRoles)?seq_contains(role)?string("checked", "")} />
+                    <label for="${role}" class="form-check-label">${role}</label>
                 </div>
             </#list>
         </fieldset>
 
-        <button type="submit">Сохранить</button>
+        <button type="submit" class="btn btn-info my-3">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/>
+            </svg>
+            Сохранить
+        </button>
     </form>
 
 </@base.content>
