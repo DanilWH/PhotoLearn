@@ -72,7 +72,7 @@
 				<!-- Show the description and the photo if the student has already uploaded a photo result -->
 
 				<div align="center">
-					<div class="card mb-3" style="max-width: 540px;">
+					<div class="card" style="max-width: 540px;">
 						<div class="row no-gutters">
 							<div class="col-md-4">
 								<img src="/img/${photoResultDto.filename}" class="rounded card-img" alt="${photoResultDto.filename}">
@@ -81,16 +81,37 @@
 								<div class="card-body">
 									<p class="card-text">${photoResultDto.description}</p>
 									<hr />
-									<!-- Later, make an implementation of like a popping up widow (using bootstrap) that will ask
-										if the user really wants to delete the 'PhotoResult'. -->
-									<a class="btn btn-outline-info btn-sm"
-									   href="/tutorial/${tutorialDto.id}/photo-result/${photoResultDto.id}/delete">
+
+									<!-- Button trigger modal -->
+									<button class="btn btn-outline-info btn-sm" data-toggle="modal" data-target="#confirmTutorialDeletion">
 										<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash2-fill" viewBox="0 0 16 16">
 											<path d="M2.037 3.225l1.684 10.104A2 2 0 0 0 5.694 15h4.612a2 2 0 0 0 1.973-1.671l1.684-10.104C13.627 4.224 11.085 5 8 5c-3.086 0-5.627-.776-5.963-1.775z"/>
 											<path fill-rule="evenodd" d="M12.9 3c-.18-.14-.497-.307-.974-.466C10.967 2.214 9.58 2 8 2s-2.968.215-3.926.534c-.477.16-.795.327-.975.466.18.14.498.307.975.466C5.032 3.786 6.42 4 8 4s2.967-.215 3.926-.534c.477-.16.795-.327.975-.466zM8 5c3.314 0 6-.895 6-2s-2.686-2-6-2-6 .895-6 2 2.686 2 6 2z"/>
 										</svg>
 										Удалить ответ.
-									</a>
+									</button>
+
+									<!-- Modal -->
+									<div class="modal fade" id="confirmTutorialDeletion" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="confirmTutorialDeletionLabel" aria-hidden="true">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+												<div class="modal-header">
+													<h5 class="modal-title" id="confirmTutorialDeletionLabel">Удалить ваш результат?</h5>
+													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+														<span aria-hidden="true">&times;</span>
+													</button>
+												</div>
+												<div class="modal-body">
+													<p>Вы уверены что хотите удалить ваш ответ к уроку "${tutorialDto.title}"</p>
+													<img src="/img/${photoResultDto.filename}" class="rounded card-img" alt="${photoResultDto.filename}">
+												</div>
+												<div class="modal-footer">
+													<button type="button" class="btn btn-secondary" data-dismiss="modal">Не удалять</button>
+													<a href="/tutorial/${tutorialDto.id}/photo-result/${photoResultDto.id}/delete" class="btn btn-info">Удалить</a>
+												</div>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -130,7 +151,7 @@
 					</div>
 
 					<!-- The "send" button. -->
-					<button id="submitBtn" type="submit" class="btn btn-info" disabled="true">
+					<button id="submitBtn" type="submit" class="btn btn-info mb-3" disabled="true">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cloud-upload-fill" viewBox="0 0 16 16">
 							<path fill-rule="evenodd" d="M8 0a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 4.095 0 5.555 0 7.318 0 9.366 1.708 11 3.781 11H7.5V5.707L5.354 7.854a.5.5 0 1 1-.708-.708l3-3a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1-.708.708L8.5 5.707V11h4.188C14.502 11 16 9.57 16 7.773c0-1.636-1.242-2.969-2.834-3.194C12.923 1.999 10.69 0 8 0zm-.5 14.5V11h1v3.5a.5.5 0 0 1-1 0z"/>
 						</svg>
