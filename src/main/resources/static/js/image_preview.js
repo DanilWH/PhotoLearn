@@ -12,8 +12,12 @@ function imagePreview() {
         };
 
         reader.readAsDataURL(fileInput.files[0]);
-        document.getElementById('submitBtn').disabled = false;
         document.getElementById('fileLabel').innerHTML = fileInput.files[0].name;
+
+        var submitBtn = document.getElementById('submitBtn');
+        if (submitBtn != null) {
+            submitBtn.disabled = false;
+        }
     }
     else {
         document.getElementById('submitBtn').disabled = true;

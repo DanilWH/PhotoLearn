@@ -4,9 +4,10 @@
 
 <@base.content title="Редактировать урок | Photo Learn">
 
+    <@base.header>Редактировать урок</@base.header>
+
     <!-- load the TinyMCE editor -->
     <@common.tutorial_editor
-        header="Редактировать урок"
         action="/tutorial/${tutorialDto.id}/edit"
         tutorialDto=tutorialDto
         titleValue="${tutorialDto.title}"

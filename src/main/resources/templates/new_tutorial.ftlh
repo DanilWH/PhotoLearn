@@ -4,7 +4,9 @@
 
 <@base.content title="Новый урок | Photo Learn">
 
+	<@base.header>Новый урок</@base.header>
+
 	<!-- load the TinyMCE editor -->
-	<@common.tutorial_editor header="Новый урок" action="/tutorial/new" tutorialDto=tutorialDto />
+	<@common.tutorial_editor action="/tutorial/new" tutorialDto=tutorialDto />
 
 </@base.content>
