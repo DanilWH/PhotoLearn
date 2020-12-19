@@ -10,7 +10,7 @@
     </p>
     <form action="/tutorial/${tutorialDto.id}/delete" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
-        
+
         <a href="/tutorial/${tutorialDto.id}" class="btn btn-info">Нет</a>
         <button type="submit" class="btn btn-danger">Да</button>
     </form>

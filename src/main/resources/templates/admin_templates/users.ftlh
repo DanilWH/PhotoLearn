@@ -2,14 +2,16 @@
 
 <@base.content title="Пользователи | Photo Learn">
 
-    <h1>Список пользователей</h1>
+    <@base.header>Список пользователей</@base.header>
 
-    <table>
-        <thead>
-            <th>ID</th>
-            <th>Username</th>
-            <th>User Roles</th>
-            <th></th>
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">ID</th>
+                <th scope="col">Username</th>
+                <th scope="col">User Roles</th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
             <#list usersDto as singleUser>
