@@ -45,7 +45,7 @@
                                             <img src="/img/${resultDto.filename}" style="width: 100%; height: 100%"/>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                                         </div>
                                     </div>
                                 </div>
