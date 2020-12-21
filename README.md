@@ -7,3 +7,4 @@ Available on: [photo-learn.herokuapp.com](https://photo-learn.herokuapp.com/)
 
 What I've learned:
  - Any transfer of data between the client and server should be done through DTO models.
+ - It's not a good practice to write logic in controllers. Rather, create a new service and some methods in it. Those methods should do the logic.
