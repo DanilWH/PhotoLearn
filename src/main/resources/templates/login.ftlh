@@ -4,6 +4,18 @@
 
     <@base.header>Вход</@base.header>
 
+    <#if Session.SPRING_SECURITY_LAST_EXCEPTION??>
+        <div class="alert alert-danger" role="alert">
+            ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
+        </div>
+    </#if>
+
+    <#if message??>
+        <div class="alert alert-${messageType}" role="alert">
+            ${message}
+        </div>
+    </#if>
+
     <form action="/login" method="post">
         <input type="hidden" name="_csrf" value="${_csrf.token}" />
 

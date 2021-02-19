@@ -29,7 +29,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         "/tutorials",
                         "/tutorial/{tutorialId}",
                         "/css/**", "/js/**", "/img/**",
-                        "/registration").permitAll()
+                        "/registration",
+                        "/activate/*").permitAll()
                 .anyRequest().authenticated()
             .and()
                 .formLogin()

@@ -1,24 +1,15 @@
 package com.example.PhotoLearn.models;
 
-import java.util.Collection;
-import java.util.Set;
-
-import javax.persistence.CollectionTable;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
-
 import com.example.PhotoLearn.validation.ValidPassword;
 import com.example.PhotoLearn.validation.ValidUsername;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -38,6 +29,11 @@ public class User implements UserDetails{
     @CollectionTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<UserRoles> userRoles;
+
+    @Email(message = "Invalid email.")
+    @NotBlank(message = "This field must not be empty.")
+    private String email;
+    private String activationCode;
 
     public boolean isAdmin() {
         return this.userRoles.contains(UserRoles.ROLE_ADMIN);
@@ -115,5 +111,20 @@ public class User implements UserDetails{
     public boolean isEnabled() {
         return this.active;
     }
-    
+
+    public String getActivationCode() {
+        return activationCode;
+    }
+
+    public void setActivationCode(String activationCode) {
+        this.activationCode = activationCode;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }

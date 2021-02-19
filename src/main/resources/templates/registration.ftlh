@@ -59,6 +59,18 @@
 			</div>
 		</div>
 
+		<div class="form-group">
+			<label for="email">Email: </label>
+			<@spring.bind "userDto.email" />
+			<@spring.formInput
+					"userDto.email"
+					"class='form-control ${(spring.status.error)?string(\"is-invalid\", \"\")}' aria-describedby='emailValidation' placeholder='some@some.some'"
+			/>
+			<div id="emailValidation" class="invalid-feedback">
+				<@spring.showErrors "<br>" />
+			</div>
+		</div>
+
 		<button id="submit_id" type="submit" class="btn btn-info">Зарегистрироваться</button>
 	</form>
 

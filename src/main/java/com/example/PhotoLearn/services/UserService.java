@@ -6,27 +6,32 @@ import com.example.PhotoLearn.models.UserRoles;
 import com.example.PhotoLearn.repositories.UserRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
-import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Transactional
 public class UserService {
+
+    @Value("${mail.activation.address}")
+    private String activationAddress;
     
     @Autowired
     private UserRepository userRepository;
     
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private EmailSenderService emailSender;
 
     // TODO refactoring.
 
@@ -39,8 +44,14 @@ public class UserService {
         user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
         user.setActive(true);
         user.setUserRoles(Collections.singleton(UserRoles.ROLE_STUDENT));
+        user.setEmail(accountDto.getEmail());
+        user.setActivationCode(UUID.randomUUID().toString());
+
+        user = this.userRepository.save(user);
+
+        this.sendMessage(user);
         
-        return this.userRepository.save(user);
+        return user;
     }
 
     public User updateUserRoles(Long userId, Set<UserRoles> userRoles) {
@@ -82,5 +93,37 @@ public class UserService {
     public User getCurrentUserOrElseThrow() {
         return getCurrentUser().orElseThrow(() -> new NoResultException());
     }
-    
+
+    /*** Email section ***/
+
+    public void sendMessage(User user) {
+        if (!StringUtils.isEmpty(user.getEmail())) {
+            String message = String.format(
+                    "Hello, %s! \n" +
+                    "Добро пожаловать на PhotoLearn! Чтобы подтвердить ваш email, " +
+                    "пожалуйста, перейдите по ссылке: %s%s",
+
+                    user.getUsername(),
+                    this.activationAddress,
+                    user.getActivationCode()
+            );
+
+            this.emailSender.send(user.getEmail(), "Activation code", message);
+        }
+    }
+
+    public boolean activateUser(String code) {
+        User user = this.userRepository.findByActivationCode(code);
+
+        if (user == null) {
+            return false;
+        }
+
+        user.setActivationCode(null);
+
+        this.userRepository.save(user);
+
+        return true;
+    }
+
 }
