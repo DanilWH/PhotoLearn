@@ -71,6 +71,15 @@
 			</div>
 		</div>
 
+        <div class="form-group">
+            <div class="g-recaptcha" data-sitekey="6LfyD2YaAAAAAGkeH5Zkev77qcTG29hmmkQ0yUL1"></div>
+            <#if captchaError??>
+                <div class="alert alert-danger" role="alert">
+                    ${captchaError}
+                </div>
+            </#if>
+        </div>
+
 		<button id="submit_id" type="submit" class="btn btn-info">Зарегистрироваться</button>
 	</form>
 
