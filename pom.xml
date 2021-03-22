@@ -19,6 +19,12 @@
 	</properties>
 
     <dependencies>
+		<!-- RemenberMe. -->
+		<dependency>
+			<groupId>org.springframework.session</groupId>
+			<artifactId>spring-session-jdbc</artifactId>
+		</dependency>
+
 		<!-- Email -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
