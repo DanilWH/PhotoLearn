@@ -40,8 +40,8 @@ public class RegistrationController {
     @PostMapping("/registration")
     public String addNewUser(
             @Valid UserDto userDto,
-            @RequestParam(name="g-recaptcha-response") String gRecaptchaResponse,
             BindingResult bindingResult,
+            @RequestParam(name="g-recaptcha-response") String gRecaptchaResponse,
             Model model
     ) {
         String url = String.format(CAPTCHA_URL, this.recaptchaSecret, gRecaptchaResponse);

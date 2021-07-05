@@ -4,7 +4,7 @@
 
     <@base.header>Список пользователей</@base.header>
 
-    <table class="table table-hover">
+    <table class="table table-hover" id="users-list-table">
         <thead class="thead-dark">
             <tr>
                 <th scope="col">ID</th>

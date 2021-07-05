@@ -3,3 +3,5 @@ INSERT INTO users(id, active, password, username)
 
 INSERT INTO user_roles(user_id, user_roles)
     VALUES (1, 'ROLE_ADMIN');
+
+ALTER SEQUENCE hibernate_sequence RESTART WITH 2;

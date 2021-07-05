@@ -4,11 +4,11 @@
 
 	<@base.header>Уроки</@base.header>
 
-	<div class="card-columns">
+	<div class="card-columns" id="tutorials-list">
 		<#list tutorials as tutorial>
-			<div class="card">
+			<div class="card" data-id="${tutorial.id}">
 				<#if tutorial.imgName??>
-					<img src="/img/${tutorial.imgName}" class="card-img-top" alt="${tutorial.imgName}">
+					<img src="/img/${tutorial.imgName}" class="card-img-top" alt="${tutorial.imgName}" />
 				</#if>
 				<div class="card-body">
 					<h5 class="card-title">${tutorial.title}</h5>

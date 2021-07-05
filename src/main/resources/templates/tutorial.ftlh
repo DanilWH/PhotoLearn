@@ -16,7 +16,7 @@
 		<div class="d-flex justify-content-between">
 			${tutorialDto.title}
 			<@security.authorize access="hasRole('ROLE_TEACHER')">
-				<div class="btn-group btn-group-sm mt-4" role="group" aria-label="edit-delete" style="height: 100%;">
+				<div class="btn-group btn-group-sm mt-4" role="group" aria-label="edit-delete" style="height: 100%;" id="edit-delete-tutorial-buttons">
 					<a href="/tutorial/${tutorialDto.id}/edit" class="btn btn-info">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
 							<path fill-rule="evenodd" d="M13.498.795l.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
@@ -38,7 +38,7 @@
 	<#if _user??>
 		<#if _user.isAdmin() || _user.isTeacher()>
 			<div>
-				<a href="/tutorial/${tutorialDto.id}/photo-results" class="btn btn-outline-info mb-3">
+				<a href="/tutorial/${tutorialDto.id}/photo-results" class="btn btn-outline-info mb-3" id="watch-students-results-button">
 					<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-list" viewBox="0 0 16 16">
 						<path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"/>
 						<path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"/>
@@ -72,14 +72,14 @@
 				<!-- Show the description and the photo if the student has already uploaded a photo result -->
 
 				<div align="center">
-					<div class="card" style="max-width: 540px;">
+					<div class="card" style="max-width: 540px;" id="student-result">
 						<div class="row no-gutters">
 							<div class="col-md-4">
-								<img src="/img/${photoResultDto.filename}" class="rounded card-img" alt="${photoResultDto.filename}">
+								<img src="/img/${photoResultDto.filename}" class="rounded card-img" alt="${photoResultDto.filename}" />
 							</div>
 							<div class="col-md-8">
 								<div class="card-body">
-									<p class="card-text">${photoResultDto.description}</p>
+									<p class="card-text" id="description">${photoResultDto.description}</p>
 									<hr />
 
 									<!-- Button trigger modal -->
@@ -98,12 +98,12 @@
 												<div class="modal-header">
 													<h5 class="modal-title" id="confirmTutorialDeletionLabel">Удалить ваш результат?</h5>
 													<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-														<span aria-hidden="true">&times;</span>
+														<span aria-hidden="true">&#215;</span> <!-- &#215; stands for &times; -->
 													</button>
 												</div>
 												<div class="modal-body">
 													<p>Вы уверены что хотите удалить ваш ответ к уроку "${tutorialDto.title}"</p>
-													<img src="/img/${photoResultDto.filename}" class="rounded card-img" alt="${photoResultDto.filename}">
+													<img src="/img/${photoResultDto.filename}" class="rounded card-img" alt="${photoResultDto.filename}" />
 												</div>
 												<div class="modal-footer">
 													<button type="button" class="btn btn-secondary" data-dismiss="modal">Не удалять</button>
@@ -118,8 +118,8 @@
 					</div>
 				</div>
 			<#else>
-				<!-- Create a new form if the student hasn't uploaded a photo result. -->
-				<form action="/tutorial/${tutorialDto.id}/photo-result/add" method="post" enctype="multipart/form-data">
+				<!-- Photo result uploading form. -->
+				<form action="/tutorial/${tutorialDto.id}/photo-result/add" method="post" enctype="multipart/form-data" id="photo-result-uploading-form">
 					<input type="hidden" name="_csrf" value="${_csrf.token}" />
 
 					<!-- The description form. -->

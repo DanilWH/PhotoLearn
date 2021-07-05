@@ -58,9 +58,11 @@ public class StudentTutorialController {
             List<TutorialDto> foundTutorials = new ArrayList<>();
 
             // look for the tutorials whose titles match the filter.
-            for (TutorialDto tutorialDto : tutorialsDto)
-                if (tutorialDto.getTitle().toLowerCase().contains(tutorialSearch))
+            for (TutorialDto tutorialDto : tutorialsDto) {
+                if (tutorialDto.getTitle().toLowerCase().contains(tutorialSearch)) {
                     foundTutorials.add(tutorialDto);
+                }
+            }
 
             // reuse the old variable for the list of the found tutorial.
             tutorialsDto = foundTutorials;

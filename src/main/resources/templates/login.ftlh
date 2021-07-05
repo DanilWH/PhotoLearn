@@ -5,7 +5,7 @@
     <@base.header>Вход</@base.header>
 
     <#if Session.SPRING_SECURITY_LAST_EXCEPTION??>
-        <div class="alert alert-danger" role="alert">
+        <div id="bad-credentials-alert" class="alert alert-danger" role="alert">
             ${Session.SPRING_SECURITY_LAST_EXCEPTION.message}
         </div>
     </#if>
@@ -21,11 +21,11 @@
 
         <div class="form-group">
             <label for="username_id">Имя пользователя</label>
-            <input id="username_id" type="text" class="form-control" name="username" required/>
+            <input id="username_id" type="text" class="form-control" name="username" required="required" />
         </div>
         <div class="form-group">
             <label for="password_id">Пароль</label>
-            <input id="password_id" type="password" class="form-control" name="password" required/>
+            <input id="password_id" type="password" class="form-control" name="password" required="required" />
         </div>
         <button type="submit" class="btn btn-info">Войти</button>
     </form>
