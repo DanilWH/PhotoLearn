@@ -1,5 +1,6 @@
 package com.example.PhotoLearn.controllers.student;
 
+import com.example.PhotoLearn.controllers.ControllerUtils;
 import com.example.PhotoLearn.dto.PhotoResultDto;
 import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.models.PhotoResult;
@@ -36,7 +37,7 @@ public class StudentTutorialController {
     private TutorialRepository tutorialRepository;
     @Autowired
     private PhotoResultRepository photoResultRepository;
-    
+
     @GetMapping("/")
     public String index() {
         return "redirect:/tutorials";
@@ -55,11 +56,9 @@ public class StudentTutorialController {
         if (filter != null && !filter.trim().isEmpty()) {
             // make the filter to the lower case.
             page = this.tutorialService.getDtoByTitleContainingIgnoreCase(filter, pageable);
-
         } else {
             // get all the tutorials if the filter is empty.
             page = this.tutorialService.getAllDto(pageable);
-
         }
 
         model.addAttribute("url", "/tutorials");
@@ -68,6 +67,7 @@ public class StudentTutorialController {
         // we also add the search bar value in order to display it
         // in the case if the user used the search bar.
         model.addAttribute("filter", filter);
+        model.addAttribute("pageSequence", ControllerUtils.getPagerSequence(page));
 
         return "tutorials";
     }

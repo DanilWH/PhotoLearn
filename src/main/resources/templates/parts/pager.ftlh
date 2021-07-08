@@ -14,10 +14,17 @@
             </#if>
         </li>
 
-        <#list 0..page.getTotalPages() - 1 as p>
-            <li class="page-item <#if p == page.getNumber()>active</#if>">
-                <a class="page-link" href="${url}?page=${p}<#if filter?exists>&filter=${filter}</#if>">${p + 1}</a>
-            </li>
+        <!-- The body of the pager. -->
+        <#list pageSequence as p>
+            <#if p == -1>
+                <li class="page-item disabled">
+                    <a class="page-link">...</a>
+                </li>
+            <#else>
+                <li class="page-item <#if p == page.getNumber()>active</#if>">
+                    <a class="page-link" href="${url}?page=${p}<#if filter?length != 0>&filter=${filter}</#if>">${p + 1}</a>
+                </li>
+            </#if>
         </#list>
 
         <!-- The "Next" pager button. -->

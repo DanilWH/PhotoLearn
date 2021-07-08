@@ -83,13 +83,6 @@ public class TutorialService {
         Page<TutorialDto> tutorialsDto = this.tutorialRepository.findAllByOrderByCreatedOnDesc(pageable)
                 .map(entity -> new ModelMapper().map(entity, TutorialDto.class));
 
-        // TODO remove the code below.
-/*
-        Page<TutorialDto> tutorialsDto = this.tutorialRepository.findAllByOrderByCreatedOnDesc(pageable)
-                .stream().map(entity -> new ModelMapper().map(entity, TutorialDto.class)
-        ).collect(Collectors.toList());
-*/
-
         return tutorialsDto;
     }
 
