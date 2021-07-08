@@ -1,11 +1,12 @@
 <#import "parts/base.ftlh" as base />
+<#import "parts/pager.ftlh" as pager />
 
 <@base.content title="Уроки | Photo Learn">
 
 	<@base.header>Уроки</@base.header>
 
 	<div class="card-columns" id="tutorials-list">
-		<#list tutorials as tutorial>
+		<#list page.content as tutorial>
 			<div class="card" data-id="${tutorial.id}">
 				<#if tutorial.imgName??>
 					<img src="/img/${tutorial.imgName}" class="card-img-top" alt="${tutorial.imgName}" />
@@ -23,5 +24,7 @@
 			<h3><b>Ничего не найдено.</b></h3>
 		</#list>
 	</div>
+
+	<@pager.pager url filter page />
 
 </@base.content>

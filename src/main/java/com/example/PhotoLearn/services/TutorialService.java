@@ -1,25 +1,22 @@
 package com.example.PhotoLearn.services;
 
-import java.io.File;
-import java.io.IOException;
-import java.time.Instant;
-import java.util.List;
-import java.util.UUID;
-import java.util.stream.Collectors;
-
-import com.sun.xml.bind.v2.TODO;
-import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
 import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.models.Tutorial;
 import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.repositories.TutorialRepository;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.NoResultException;
+import java.io.File;
+import java.io.IOException;
+import java.time.Instant;
+import java.util.UUID;
 
 @Service
 public class TutorialService {
@@ -82,12 +79,23 @@ public class TutorialService {
         this.tutorialRepository.delete(tutorial);
     }
 
-    public List<TutorialDto> getAllDto() {
-        List<TutorialDto> tutorialsDto = this.tutorialRepository.findAllByOrderByCreatedOnDesc()
+    public Page<TutorialDto> getAllDto(Pageable pageable) {
+        Page<TutorialDto> tutorialsDto = this.tutorialRepository.findAllByOrderByCreatedOnDesc(pageable)
+                .map(entity -> new ModelMapper().map(entity, TutorialDto.class));
+
+        // TODO remove the code below.
+/*
+        Page<TutorialDto> tutorialsDto = this.tutorialRepository.findAllByOrderByCreatedOnDesc(pageable)
                 .stream().map(entity -> new ModelMapper().map(entity, TutorialDto.class)
         ).collect(Collectors.toList());
+*/
 
         return tutorialsDto;
+    }
+
+    public Page<TutorialDto> getDtoByTitleContainingIgnoreCase(String filter, Pageable pageable) {
+        return this.tutorialRepository.findByTitleContainingIgnoreCase(filter, pageable)
+                .map(entity -> new ModelMapper().map(entity, TutorialDto.class));
     }
 
     public TutorialDto getDtoById(Long tutorialId) {

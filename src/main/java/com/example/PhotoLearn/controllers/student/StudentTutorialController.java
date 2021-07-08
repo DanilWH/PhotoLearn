@@ -11,15 +11,16 @@ import com.example.PhotoLearn.services.PhotoResultService;
 import com.example.PhotoLearn.services.TutorialService;
 import com.example.PhotoLearn.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class StudentTutorialController {
@@ -43,37 +44,31 @@ public class StudentTutorialController {
     
     @GetMapping("/tutorials")
     public String showTutorials(
-            @RequestParam(name = "tutorial-search",
-                    defaultValue = "", required = false) String tutorialSearch,
+            @RequestParam(name = "filter", defaultValue = "", required = false) String filter,
+            @PageableDefault(sort = { "id" }, size = 6, direction = Sort.Direction.DESC) Pageable pageable,
             Model model
     ) {
         // get all the tutorials that are in the database.
-        List<TutorialDto> tutorialsDto = this.tutorialService.getAllDto();
+        Page<TutorialDto> page;
 
         // check if the filter isn't empty
-        if (tutorialSearch != null && !tutorialSearch.trim().isEmpty()) {
+        if (filter != null && !filter.trim().isEmpty()) {
             // make the filter to the lower case.
-            tutorialSearch = tutorialSearch.toLowerCase();
-            // initialize an empty ArrayList for the tutorials that will be found.
-            List<TutorialDto> foundTutorials = new ArrayList<>();
+            page = this.tutorialService.getDtoByTitleContainingIgnoreCase(filter, pageable);
 
-            // look for the tutorials whose titles match the filter.
-            for (TutorialDto tutorialDto : tutorialsDto) {
-                if (tutorialDto.getTitle().toLowerCase().contains(tutorialSearch)) {
-                    foundTutorials.add(tutorialDto);
-                }
-            }
+        } else {
+            // get all the tutorials if the filter is empty.
+            page = this.tutorialService.getAllDto(pageable);
 
-            // reuse the old variable for the list of the found tutorial.
-            tutorialsDto = foundTutorials;
         }
 
+        model.addAttribute("url", "/tutorials");
         // add all the tutorials that have been found so far to the view.
-        model.addAttribute("tutorials", tutorialsDto);
+        model.addAttribute("page", page);
         // we also add the search bar value in order to display it
         // in the case if the user used the search bar.
-        model.addAttribute("tutorialsSearchValue", tutorialSearch);
-        
+        model.addAttribute("filter", filter);
+
         return "tutorials";
     }
     

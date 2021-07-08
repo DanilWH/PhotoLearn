@@ -31,8 +31,8 @@
 					</li>
 					<li class="nav-item">
 						<form action="/tutorials" method="get" class="form-inline">
-							<input class="form-control mr-sm-2" type="search" name="tutorial-search"
-								   value="${tutorialsSearchValue?ifExists}" placeholder="Найти урок" aria-label="Search"/>
+							<input class="form-control mr-sm-2" type="search" name="filter" id="filter-input"
+								   value="${filter?ifExists}" placeholder="Найти урок" aria-label="Search"/>
 							<button class="btn btn-outline-success my-2 my-sm-0" type="submit">
 								<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
 									<path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
