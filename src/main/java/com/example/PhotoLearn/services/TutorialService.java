@@ -29,7 +29,7 @@ public class TutorialService {
     @Autowired
     private TutorialRepository tutorialRepository;
     
-    public void createNewTutorial(TutorialDto tutorialDto, MultipartFile file) throws IOException {
+    public Tutorial createNewTutorial(TutorialDto tutorialDto, MultipartFile file) throws IOException {
         Tutorial tutorial = new Tutorial();
         
         tutorial.setTitle(tutorialDto.getTitle());
@@ -43,11 +43,10 @@ public class TutorialService {
         tutorial.setImgName(this.uploadImage(tutorial, file));
 
         // set the user that created the tutorial.
-        User user = this.userService.getCurrentUser().orElseThrow(
-                () -> new IllegalArgumentException("No user logged in"));
+        User user = this.userService.getCurrentUserOrElseThrow();
         tutorial.setUser(user);
         
-        this.tutorialRepository.save(tutorial);
+        return this.tutorialRepository.save(tutorial);
     }
 
     public void updateExistingTutorial(

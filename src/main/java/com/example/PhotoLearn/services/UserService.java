@@ -47,6 +47,7 @@ public class UserService {
         user.setEmail(accountDto.getEmail());
         user.setActivationCode(UUID.randomUUID().toString());
 
+        // store the saved user in a variable for its further returning.
         user = this.userRepository.save(user);
 
         this.sendMessage(user);
@@ -73,13 +74,13 @@ public class UserService {
     }
 
     public UserDto getDtoById(Long userId) {
-        User user = this.userRepository.findById(userId).orElseThrow(() -> new NoResultException());
+        User user = this.userRepository.findById(userId).orElseThrow(NoResultException::new);
 
         return new ModelMapper().map(user, UserDto.class);
     }
 
     public User getById(Long userId) {
-        return this.userRepository.findById(userId).orElseThrow(() -> new NoResultException());
+        return this.userRepository.findById(userId).orElseThrow(NoResultException::new);
     }
 
     /*** Current user section ***/
@@ -91,7 +92,7 @@ public class UserService {
     }
 
     public User getCurrentUserOrElseThrow() {
-        return getCurrentUser().orElseThrow(() -> new NoResultException());
+        return getCurrentUser().orElseThrow(NoResultException::new);
     }
 
     /*** Email section ***/
