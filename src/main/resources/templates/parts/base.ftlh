@@ -15,7 +15,11 @@
 
 		<title>${title}</title>
 
+		<!-- Recaptcha. -->
 		 <script src="https://www.google.com/recaptcha/api.js"></script>
+
+		<!-- Font Awesome. -->
+		<script src="https://kit.fontawesome.com/69a74d55b8.js" crossorigin="anonymous"></script>
     </head>
     <body>
 		<nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-dark">

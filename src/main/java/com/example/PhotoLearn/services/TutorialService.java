@@ -4,7 +4,6 @@ import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.models.Tutorial;
 import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.repositories.TutorialRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -12,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import java.io.File;
 import java.io.IOException;
@@ -28,6 +28,9 @@ public class TutorialService {
     private UserService userService;
     @Autowired
     private TutorialRepository tutorialRepository;
+
+    @Autowired
+    private EntityManager em;
     
     public Tutorial createNewTutorial(TutorialDto tutorialDto, MultipartFile file) throws IOException {
         Tutorial tutorial = new Tutorial();
@@ -78,31 +81,24 @@ public class TutorialService {
         this.tutorialRepository.delete(tutorial);
     }
 
-    public Page<TutorialDto> getAllDto(Pageable pageable) {
-        Page<TutorialDto> tutorialsDto = this.tutorialRepository.findAllByOrderByCreatedOnDesc(pageable)
-                .map(entity -> new ModelMapper().map(entity, TutorialDto.class));
-
-        return tutorialsDto;
+    /**
+     * @return All the tutorials in DTO.
+     **/
+    public Page<TutorialDto> getAllDto(Pageable pageable, User currentUser) {
+        return this.tutorialRepository.findAllByOrderByCreatedOnDesc(pageable, currentUser);
     }
 
-    public Page<TutorialDto> getDtoByTitleContainingIgnoreCase(String filter, Pageable pageable) {
-        return this.tutorialRepository.findByTitleContainingIgnoreCase(filter, pageable)
-                .map(entity -> new ModelMapper().map(entity, TutorialDto.class));
+    public Page<TutorialDto> getDtoByTitleContainingIgnoreCase(String filter, Pageable pageable, User currentUser) {
+        return this.tutorialRepository.findByTitleContainingIgnoreCase(filter, pageable, currentUser);
     }
 
-    public TutorialDto getDtoById(Long tutorialId) {
+    public TutorialDto getDtoById(Long tutorialId, User currentUser) {
         // extract the necessary tutorial from the database.
-        Tutorial tutorial = this.getById(tutorialId);
-
-        // map the extracted tutorial into DTO.
-        ModelMapper modelMapper = new ModelMapper();
-        TutorialDto tutorialDto = modelMapper.map(tutorial, TutorialDto.class);
-
-        return tutorialDto;
+        return this.tutorialRepository.findTutorialById(tutorialId, currentUser);
     }
 
     public Tutorial getById(Long tutorialId) {
-        return this.tutorialRepository.findById(tutorialId).orElseThrow(() -> new NoResultException());
+        return this.tutorialRepository.findById(tutorialId).orElseThrow(NoResultException::new);
     }
 
     private String uploadImage(Tutorial tutorial, MultipartFile file) throws IOException {

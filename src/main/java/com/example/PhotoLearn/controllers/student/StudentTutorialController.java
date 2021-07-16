@@ -4,6 +4,7 @@ import com.example.PhotoLearn.controllers.ControllerUtils;
 import com.example.PhotoLearn.dto.PhotoResultDto;
 import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.models.PhotoResult;
+import com.example.PhotoLearn.models.Tutorial;
 import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.models.UserRoles;
 import com.example.PhotoLearn.repositories.PhotoResultRepository;
@@ -21,7 +22,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.util.Set;
 
 @Controller
 public class StudentTutorialController {
@@ -45,6 +52,7 @@ public class StudentTutorialController {
     
     @GetMapping("/tutorials")
     public String showTutorials(
+            @AuthenticationPrincipal User currentUser,
             @RequestParam(name = "filter", defaultValue = "", required = false) String filter,
             @PageableDefault(sort = { "id" }, size = 6, direction = Sort.Direction.DESC) Pageable pageable,
             Model model
@@ -52,13 +60,14 @@ public class StudentTutorialController {
         // get all the tutorials that are in the database.
         Page<TutorialDto> page;
 
+        // TODO move the piece code below to the tutorial service.
         // check if the filter isn't empty
         if (filter != null && !filter.trim().isEmpty()) {
             // make the filter to the lower case.
-            page = this.tutorialService.getDtoByTitleContainingIgnoreCase(filter, pageable);
+            page = this.tutorialService.getDtoByTitleContainingIgnoreCase(filter, pageable, currentUser);
         } else {
             // get all the tutorials if the filter is empty.
-            page = this.tutorialService.getAllDto(pageable);
+            page = this.tutorialService.getAllDto(pageable, currentUser);
         }
 
         model.addAttribute("url", "/tutorials");
@@ -78,7 +87,7 @@ public class StudentTutorialController {
             @AuthenticationPrincipal User currentUser,
             Model model
     ) {
-        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId);
+        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId, currentUser);
 
         // put the tutorial DTO into the model.
         model.addAttribute(tutorialDto);
@@ -95,5 +104,29 @@ public class StudentTutorialController {
         }
 
         return "tutorial";
+    }
+
+    @GetMapping("/tutorial/{tutorialId}/like")
+    public String tutorialLike(
+            @AuthenticationPrincipal User currentUser,
+            @PathVariable Tutorial tutorialId,
+            RedirectAttributes redirectAttributes,
+            @RequestHeader(required = false) String referer
+    ) {
+        Set<User> likes = tutorialId.getLikes();
+
+        if (likes.contains(currentUser)) {
+            likes.remove(currentUser);
+        } else {
+            likes.add(currentUser);
+        }
+
+        UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
+
+        components.getQueryParams()
+                .entrySet()
+                .forEach(pair -> redirectAttributes.addAttribute(pair.getKey(), pair.getValue()));
+
+        return "redirect:" + components.getPath();
     }
 }

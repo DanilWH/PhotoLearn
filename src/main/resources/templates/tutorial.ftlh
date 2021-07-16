@@ -52,6 +52,7 @@
 		</#if>
 	</#if>
 
+	<!-- The content section. -->
 	<div>
 		${tutorialDto.content?no_esc}
 		<hr />
@@ -65,9 +66,26 @@
 		<@js_scripts.toastInit imgName="${tutorialDto.imgName}" />
 	</#if>
 
+	<!-- Upvote section. -->
+	<div>
+		<hr />
+		<a href="/tutorial/${tutorialDto.id}/like" class="d-flex justify-content-start" style="text-decoration: none;">
+			<span>Upvote</span>
+			<h3 class="ml-1">
+				<#if tutorialDto.meLiked>
+					<i class="fas fa-caret-square-up"></i>
+				<#else>
+					<i class="far fa-caret-square-up"></i>
+				</#if>
+			</h3>
+			<h4 class="ml-3">${tutorialDto.likes}</h4>
+		</a>
+	</div>
+
 	<!-- The "PhotoResult" form -->
 	<#if _user??>
 		<#if _user.isStudent()>
+			<hr />
 			<#if photoResultDto.id??>
 				<!-- Show the description and the photo if the student has already uploaded a photo result -->
 

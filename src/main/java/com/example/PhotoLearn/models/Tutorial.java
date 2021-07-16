@@ -2,16 +2,11 @@ package com.example.PhotoLearn.models;
 
 import org.hibernate.annotations.Type;
 
-import java.time.Instant;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "tutorials")
@@ -35,6 +30,17 @@ public class Tutorial {
 
     @ManyToOne
     private User user;
+
+    @ManyToMany
+    @JoinTable(
+            name = "tutorial_likes",
+            joinColumns = { @JoinColumn(name = "tutorial_id") },
+            inverseJoinColumns = { @JoinColumn(name = "user_id") }
+    )
+    private Set<User> likes = new HashSet<>();
+
+    public Tutorial() {
+    }
 
     public Long getId() {
         return id;
@@ -77,5 +83,13 @@ public class Tutorial {
     }
     public void setImgName(String imgName) {
         this.imgName = imgName;
+    }
+
+    public Set<User> getLikes() {
+        return likes;
+    }
+
+    public void setLikes(Set<User> likes) {
+        this.likes = likes;
     }
 }

@@ -17,7 +17,16 @@
 						<div><small class="text-muted">Создан: ${tutorial.getFormattedCreatedOn(tutorial.createdOn)}</small></div>
 						<div><small class="text-muted">Обнавлён: ${tutorial.getFormattedCreatedOn(tutorial.updatedOn)}</small></div>
 					</p>
-					<a href="/tutorial/${tutorial.id}" class="btn btn-info">Читать</a>
+					<div class="d-flex justify-content-between">
+						<a href="/tutorial/${tutorial.id}" class="btn btn-info">Читать</a>
+						<small class="text-muted">Нравится: ${tutorial.likes}
+							<#if tutorial.meLiked>
+								<i class="fas fa-caret-square-up"></i>
+							<#else>
+								<i class="far fa-caret-square-up"></i>
+							</#if>
+						</small>
+					</div>
 				</div>
 			</div>
 		<#else>

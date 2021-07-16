@@ -1,22 +1,20 @@
 package com.example.PhotoLearn.controllers.teacher;
 
-import javax.persistence.NoResultException;
-import javax.validation.Valid;
-
+import com.example.PhotoLearn.dto.TutorialDto;
 import com.example.PhotoLearn.models.Tutorial;
+import com.example.PhotoLearn.models.User;
 import com.example.PhotoLearn.repositories.TutorialRepository;
-import org.modelmapper.ModelMapper;
+import com.example.PhotoLearn.services.TutorialService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.PhotoLearn.dto.TutorialDto;
-import com.example.PhotoLearn.services.TutorialService;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @Controller
@@ -56,10 +54,12 @@ public class TeacherTutorialController {
 
     @GetMapping("/{tutorialId}/edit")
     public String editTutorial(
+            @AuthenticationPrincipal User currentUser,
             @PathVariable Long tutorialId,
             Model model
     ) {
-        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId);
+        // TODO remove the unnecessary currentUser argument.
+        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId, currentUser);
 
         model.addAttribute(tutorialDto);
 
@@ -88,10 +88,12 @@ public class TeacherTutorialController {
 
     @GetMapping("/{tutorialId}/delete")
     public String deleteTutorialConfirmation(
+            @AuthenticationPrincipal User currentUser,
             @PathVariable Long tutorialId,
             Model model
     ) {
-        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId);
+        // TODO remove the unnecessary currentUser argument.
+        TutorialDto tutorialDto = this.tutorialService.getDtoById(tutorialId, currentUser);
         model.addAttribute(tutorialDto);
 
         return "delete_tutorial_confirmation";

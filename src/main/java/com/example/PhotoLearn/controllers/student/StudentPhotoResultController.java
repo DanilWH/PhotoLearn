@@ -1,15 +1,13 @@
 package com.example.PhotoLearn.controllers.student;
 
 import com.example.PhotoLearn.dto.PhotoResultDto;
-import com.example.PhotoLearn.models.PhotoResult;
-import com.example.PhotoLearn.models.Tutorial;
 import com.example.PhotoLearn.models.User;
-import com.example.PhotoLearn.repositories.TutorialRepository;
 import com.example.PhotoLearn.services.PhotoResultService;
 import com.example.PhotoLearn.services.TutorialService;
 import com.example.PhotoLearn.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,7 +16,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Controller
 @RequestMapping("/tutorial")
@@ -33,6 +30,7 @@ public class StudentPhotoResultController {
 
     @PostMapping("/{tutorialId}/photo-result/add")
     public String addPhotoResult(
+            @AuthenticationPrincipal User currentUser,
             @PathVariable Long tutorialId,
             @Valid PhotoResultDto photoResultDto,
             BindingResult bindingResult,
@@ -40,13 +38,13 @@ public class StudentPhotoResultController {
             Model model
     ) throws Exception {
         // forbid adding a PhotoResult if the current user is not a student.
-        // (in the case if a teacher or the admin got an accidentional access to the mapping)
+        // (in the case if a teacher or the admin got an accidental access to the mapping)
         if (!this.userService.getCurrentUserOrElseThrow().isStudent())
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
 
         // check if the description length is less than 200 characters.
         if (bindingResult.hasErrors()) {
-            model.addAttribute("tutorialDto", this.tutorialService.getDtoById(tutorialId));
+            model.addAttribute("tutorialDto", this.tutorialService.getDtoById(tutorialId, currentUser));
             model.addAttribute("photoResultDto", photoResultDto);
             return "tutorial";
         }
